@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "scripts": {
+    "prod": "gulp --itemion",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
+    "alpinejs": "^3.14.9",
+    "alpinejs-component": "^1.2.10",
+    "browser-sync": "^3.0.2",
+    "formstone": "^2.1.4",
+    "fs-path": "^0.0.25",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-esbuild": "^0.12.0",
+    "gulp-filter": "^7.0.0",
+    "gulp-foreach": "^0.1.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-less": "^5.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-requirejs": "^1.4.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "jshint": "^2.13.6",
+    "less-plugin-npm-import": "^2.1.0",
+    "path": "^0.12.7",
+    "postcss-import": "^16.0.1",
+    "yargs": "^17.7.2"
+  }
+}
