@@ -127,166 +127,166 @@ opperators = [
 */
 
 
-let TRIGGER_CONFIG = [
-  {
-    "name": "Page Load",
-    "value": "page_load",
-    "opperators": [
-      "delay"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Exit Intent",
-    "value": "exit_intent",
-    "opperators": [
-      "delay"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Idle Time",
-    "value": "idle_time",
-    "opperators": [
-      "delay"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Click",
-    "value": "click",
-    "opperators": [
-      "element_id",
-      "element_class"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Hover",
-    "value": "hover",
-    "opperators": [
-      "element_id",
-      "element_class"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Element visibility",
-    "value": "element_visibility",
-    "opperators": [
-      "element_id",
-      "element_class"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Scroll",
-    "value": "scroll",
-    "opperators": [
-      "scroll"
-    ],
-    "type": "text"
-  }
-];
+// let TRIGGER_CONFIG = [
+//   {
+//     "name": "Page Load",
+//     "value": "page_load",
+//     "opperators": [
+//       "delay"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Exit Intent",
+//     "value": "exit_intent",
+//     "opperators": [
+//       "delay"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Idle Time",
+//     "value": "idle_time",
+//     "opperators": [
+//       "delay"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Click",
+//     "value": "click",
+//     "opperators": [
+//       "element_id",
+//       "element_class"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Hover",
+//     "value": "hover",
+//     "opperators": [
+//       "element_id",
+//       "element_class"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Element visibility",
+//     "value": "element_visibility",
+//     "opperators": [
+//       "element_id",
+//       "element_class"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Scroll",
+//     "value": "scroll",
+//     "opperators": [
+//       "scroll"
+//     ],
+//     "type": "text"
+//   }
+// ];
 
-let BEHAVIOR_CONFIG = [
-  {
-    "name": "Page",
-    "value": "page",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Post",
-    "value": "post",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Category",
-    "value": "category",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Tag",
-    "value": "tag",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Post Type",
-    "value": "post_type",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Browser Location",
-    "value": "browser_location",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Browser Language",
-    "value": "browser_language",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  }
-];
+// let BEHAVIOR_CONFIG = [
+//   {
+//     "name": "Page",
+//     "value": "page",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Post",
+//     "value": "post",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Category",
+//     "value": "category",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Tag",
+//     "value": "tag",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Post Type",
+//     "value": "post_type",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Browser Location",
+//     "value": "browser_location",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   },
+//   {
+//     "name": "Browser Language",
+//     "value": "browser_language",
+//     "opperators": [
+//       "equals",
+//       "not_equals"
+//     ],
+//     "type": "text"
+//   }
+// ];
 
-let OPPERATOR_CONFIG = [
-  {
-    "id": "delay",
-    "name": "Delay",
-    "placeholder": "0 seconds",
-  },
-  {
-    "id": "element_id",
-    "name": "Element ID",
-    "placeholder": "trigger_button",
-  },
-  {
-    "id": "element_class",
-    "name": "Element Class",
-    "placeholder": "trigger_button22",
-  },
-  {
-    "id": "scroll",
-    "name": "Scroll",
-    "placeholder": "100px",
-  },
-  {
-    "id": "equals",
-    "name": "Equals",
-    "placeholder": "id",
-  },
-  {
-    "id": "not_equals",
-    "name": "Not Equals",
-    "placeholder": "id",
-  }
-];
+// let OPPERATOR_CONFIG = [
+//   {
+//     "id": "delay",
+//     "name": "Delay",
+//     "placeholder": "0 seconds",
+//   },
+//   {
+//     "id": "element_id",
+//     "name": "Element ID",
+//     "placeholder": "trigger_button",
+//   },
+//   {
+//     "id": "element_class",
+//     "name": "Element Class",
+//     "placeholder": "trigger_button22",
+//   },
+//   {
+//     "id": "scroll",
+//     "name": "Scroll",
+//     "placeholder": "100px",
+//   },
+//   {
+//     "id": "equals",
+//     "name": "Equals",
+//     "placeholder": "id",
+//   },
+//   {
+//     "id": "not_equals",
+//     "name": "Not Equals",
+//     "placeholder": "id",
+//   }
+// ];
 
 Alpine.store('popups', {
     triggerGroups: [],
@@ -310,9 +310,9 @@ Alpine.store('popups', {
         }
       }
 
-      this.triggerOptions = TRIGGER_CONFIG;
-      this.behaviorOptions = BEHAVIOR_CONFIG;
-      this.opperatorOptions = OPPERATOR_CONFIG;
+      this.behaviorOptions = window.PopBlocksConfig.behaviors;
+      this.opperatorOptions = window.PopBlocksConfig.opperators;
+      this.triggerOptions = window.PopBlocksConfig.triggers;
     },
 });
 

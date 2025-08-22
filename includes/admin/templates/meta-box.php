@@ -1,38 +1,42 @@
 <script>
   let time = (new Date()).getTime();
   
+  window.PopBlocksConfig = <?php echo PopBlocks_Config::admin_settings(); ?>;
+  
+  <?php if ( ! empty( $popup_data ) ) : ?>
   window.PopUpsData = <?php echo $popup_data; ?>
-
-  // window.PopUpsData = {
-  //   triggerGroups: [
-  //     {
-  //       id: 'id' + (new Date()).getTime() + 2,
-  //       rules: [
-  //         {
-  //           id: 'id' + (new Date()).getTime(),
-  //           parent: 'trigger',
-  //           type: 'page_load',
-  //           opperator: 'delay',
-  //           value: '0',
-  //         },
-  //       ]
-  //     },
-  //   ],
-  //   behaviorGroups: [
-  //     {
-  //       id: 'id' + (new Date()).getTime() + 2,
-  //       rules: [
-  //         {
-  //           id: 'id' + (new Date()).getTime(),
-  //           parent: 'behavior',
-  //           type: 'page',
-  //           opperator: 'equals',
-  //           value: '0',
-  //         },
-  //       ]
-  //     },
-  //   ],
-  // };
+  <?php else : ?>
+  window.PopUpsData = {
+    triggerGroups: [
+      {
+        id: 'id' + (new Date()).getTime() + 2,
+        rules: [
+          {
+            id: 'id' + (new Date()).getTime(),
+            parent: 'trigger',
+            type: 'page_load',
+            opperator: 'delay',
+            value: '0',
+          },
+        ]
+      },
+    ],
+    behaviorGroups: [
+      {
+        id: 'id' + (new Date()).getTime() + 2,
+        rules: [
+          {
+            id: 'id' + (new Date()).getTime(),
+            parent: 'behavior',
+            type: 'page',
+            opperator: 'equals',
+            value: '0',
+          },
+        ]
+      },
+    ],
+  };
+  <?php endif; ?>
 </script>
 
 <div
@@ -43,8 +47,6 @@
   })"
   x-on:tab-activated="onTabActivated"
 >
-
-  <textarea name="popblocks_data" x-text="finalData()"></textarea>
 
   <div
     x-data="popupsTabs({
@@ -165,6 +167,8 @@
       </div>
     </div>
   </div>
+  
+  <textarea name="popblocks_data" x-text="finalData()" style="width: 100%; height: 200px; margin-top: 40px;"></textarea>
 </div>
 
 <template id="popup_conditionals">
@@ -309,6 +313,7 @@
               x-for="opperatorOption in getOpperatorOptions(rule)"
             >
               <input
+                x-model="rule.value"
                 x-bind:placeholder="opperatorOption.placeholder"
                 x-show="rule.opperator == opperatorOption.id"
               ></input>
@@ -344,5 +349,5 @@
         Add New Group
       </button>
     </div>
-  </div>
+  </div>  
 </template>

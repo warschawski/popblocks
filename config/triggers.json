@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Page Load",
+    "value": "page_load",
+    "opperators": [
+      "delay"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Exit Intent",
+    "value": "exit_intent",
+    "opperators": [
+      "delay"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Idle Time",
+    "value": "idle_time",
+    "opperators": [
+      "delay"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Click",
+    "value": "click",
+    "opperators": [
+      "element_id",
+      "element_class"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Hover",
+    "value": "hover",
+    "opperators": [
+      "element_id",
+      "element_class"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Element visibility",
+    "value": "element_visibility",
+    "opperators": [
+      "element_id",
+      "element_class"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Scroll",
+    "value": "scroll",
+    "opperators": [
+      "scroll"
+    ],
+    "type": "text"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "delay",
+    "name": "Delay",
+    "placeholder": "0 seconds"
+  },
+  {
+    "id": "element_id",
+    "name": "Element ID",
+    "placeholder": "trigger_button"
+  },
+  {
+    "id": "element_class",
+    "name": "Element Class",
+    "placeholder": "trigger_button22"
+  },
+  {
+    "id": "scroll",
+    "name": "Scroll",
+    "placeholder": "100px"
+  },
+  {
+    "id": "equals",
+    "name": "Equals",
+    "placeholder": "id"
+  },
+  {
+    "id": "not_equals",
+    "name": "Not Equals",
+    "placeholder": "id"
+  }
+]

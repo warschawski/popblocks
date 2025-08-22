@@ -208,6 +208,7 @@ class PopBlocks {
   public function require_global() {
     $path = $this->get_path();
 
+    require_once $path . 'includes/config.php';
     require_once $path . 'includes/post-types.php';
   }
 

@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Page",
+    "value": "page",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Post",
+    "value": "post",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Category",
+    "value": "category",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Tag",
+    "value": "tag",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Post Type",
+    "value": "post_type",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Browser Location",
+    "value": "browser_location",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  },
+  {
+    "name": "Browser Language",
+    "value": "browser_language",
+    "opperators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text"
+  }
+]
