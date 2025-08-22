@@ -210,6 +210,9 @@ class PopBlocks {
 
     require_once $path . 'includes/config.php';
     require_once $path . 'includes/post-types.php';
+    
+    require_once $path . 'includes/cache.php';
+    require_once $path . 'includes/display.php';
   }
 
   // // Functions

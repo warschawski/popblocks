@@ -38,10 +38,10 @@ class PopBlocks_Meta_Box {
       if ( is_object( $screen ) && $screen->post_type == 'popblocks-popup' ) {
         wp_enqueue_style( 'wp-components' );
         
-        wp_register_style( 'popblocks-admin', $this->plugin->get_url() . '/assets/css/admin.css', '',  $this->plugin->version );
+        wp_register_style( 'popblocks-admin', $this->plugin->get_url() . 'assets/css/admin.css', '',  $this->plugin->version );
         wp_enqueue_style( 'popblocks-admin' );
 
-        wp_register_script( 'popblocks-admin', $this->plugin->get_url() . '/assets/js/admin.js', '', $this->plugin->version, true );
+        wp_register_script( 'popblocks-admin', $this->plugin->get_url() . 'assets/js/admin.js', '', $this->plugin->version, true );
         wp_enqueue_script( 'popblocks-admin' );
       }
     }
