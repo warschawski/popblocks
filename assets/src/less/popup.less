@@ -1,1 +1,38 @@
 @import 'npm://formstone/src/less/modal.less';
+
+.popblocks-modal {
+    --popblocks-modal-button-background: transparent;
+    --popblocks-modal-button-color: var(--wp--preset--color--contrast);
+    
+    --popblocks-modal-container-bg: var(--wp--preset--color--base);
+    
+    // Map --poblocks- to --fs-?
+    
+    --popblocks-popup-width: ~'min(600px, 90vw)';
+}
+
+// .popblocks-trigger,
+.popblocks-popup-container {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+
+.popblocks-popup {
+    max-width: var(--popblocks-popup-width);
+    
+    p.has-background {
+        
+        &:first-child {
+            margin-top: 0;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

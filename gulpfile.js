@@ -9,9 +9,9 @@ let filter         = require('gulp-filter');
 let foreach        = require('gulp-foreach');
 let jshint         = require('gulp-jshint');
 let less           = require('gulp-less');
+let replace        = require('gulp-replace');
 let path           = require('path');
 let plumber        = require('gulp-plumber');
-let sourcemaps     = require('gulp-sourcemaps');
 
 var lessImportNPM  = require('less-plugin-npm-import');
 
@@ -33,11 +33,12 @@ var plumberOptions = {
 function compileStyles(src, opts, dest, vars) {
   return gulp.src(src, opts)
   .pipe(plumber(plumberOptions))
-  .pipe(sourcemaps.init({ loadMaps: true }))
   .pipe(less({
     globalVars: vars || {},
     plugins: [ new lessImportNPM() ],
   }))
+  .pipe(replace('--fs-', '--popblocks-'))
+  .pipe(replace('fs-', 'popblocks-'))
   .pipe(autoprefixer({
     // browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1', 'ie >= 10']
   }))
@@ -51,7 +52,6 @@ function compileStyles(src, opts, dest, vars) {
     inline: false,
     // compatibility: 'ie10'
   }))
-  .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest(dest))
   .pipe(browserSync.stream());
 }
@@ -86,6 +86,8 @@ function compileScripts(src, opts, dest) {
         }
       })],
   }))
+  .pipe(replace('--fs-', '--popblocks-'))
+  .pipe(replace('fs-', 'popblocks-'))
   .pipe(gulp.dest(dest))
   .pipe(browserSync.stream());
 }

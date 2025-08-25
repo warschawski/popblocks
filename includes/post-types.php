@@ -66,7 +66,8 @@ class PopBlocks_Post_Types {
         'core/image',
         'core/paragraph',
         'core/heading',
-        'core/list'
+        'core/list',
+        'core/group'
       ];
     }
 

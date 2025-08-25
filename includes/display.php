@@ -67,12 +67,15 @@ class PopBlocks_Display {
     // $popup = get_post( $popup ); 
     global $post;
     
-    $path = $this->plugin->get_path() . 'templates/popup.php';
-    
     $post = get_post( $popup['ID'] );
     setup_postdata( $post );
+    
+     // Customizable via hooks
+    $path = apply_filters( 'popblocks_popup_template_path', $this->plugin->get_path() . 'templates/popup-content.php', $popup );
+    $class = apply_filters( 'popblocks_popup_template_class', '', $popup );
 
-    include apply_filters( 'popblocks_popup_template_path', $path, $popup );
+    // include apply_filters( 'popblocks_popup_template_path', $path, $popup );
+    include $this->plugin->get_path() . 'templates/popup-base.php';
     
     wp_reset_postdata();
   }
