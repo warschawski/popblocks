@@ -32,7 +32,7 @@ class PopBlocks_Display {
   public function init() {
     add_action( 'template_redirect', [ $this, 'setup' ], 999 );
     
-    add_action( 'wp_footer', [ $this, 'footer' ], 999 );
+    add_action( 'wp_footer', [ $this, 'footer' ], 5 );
   }
 
   // 
@@ -56,9 +56,15 @@ class PopBlocks_Display {
   }
   
   public function footer() {
+    ob_start();
+    
     foreach ( $this->active as $popup ) {
       $this->render( $popup );
     }
+    
+    $content = ob_get_clean();
+    
+    include $this->plugin->get_path() . 'templates/popups.php';
   } 
   
   public function render( $popup ) {
@@ -93,6 +99,14 @@ class PopBlocks_Display {
         
         if ( $rule['type'] == 'post_type' ) {
           $pass = ( is_singular( $rule['value'] ) || is_post_type_archive( $rule['value'] ) );
+        }
+        
+        if ( $rule['type'] == 'category' ) { // 'taxonomy_term'
+          $term = get_term( $rule['value'] );
+          
+          if ( ! empty( $term ) ) {
+            $pass = has_term( $rule['value'], $term->taxonomy );
+          }
         }
       }
       
