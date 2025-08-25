@@ -88,6 +88,7 @@ function compileScripts(src, opts, dest) {
   }))
   .pipe(replace('--fs-', '--popblocks-'))
   .pipe(replace('fs-', 'popblocks-'))
+  .pipe(replace('modalOptions', 'popblocksOptions'))
   .pipe(gulp.dest(dest))
   .pipe(browserSync.stream());
 }

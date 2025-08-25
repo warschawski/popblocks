@@ -38,6 +38,7 @@ import Modal from 'formstone/jquery/modal';
     
     $triggers.modal({
       // TODO: plugin settings as defaults?
+      returnFocus: false,
     });
     
     $triggers.each((i, el) => {
