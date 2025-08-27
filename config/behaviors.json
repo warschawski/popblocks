@@ -45,6 +45,15 @@
     "type": "text"
   },
   {
+    "name": "URL",
+    "value": "url",
+    "opperators": [
+      "contains",
+      "not_contains"
+    ],
+    "type": "text"
+  },
+  {
     "name": "Browser Location",
     "value": "browser_location",
     "opperators": [

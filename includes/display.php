@@ -93,21 +93,53 @@ class PopBlocks_Display {
       
       foreach ( $group['rules'] as $rule ) {
         
+        // Post Object
         if ( $rule['type'] == 'post' ) {
-          $pass = get_the_ID() == $rule['value'];
+          if ( $rule['opperator'] == 'equals' ) {
+            $pass = ( get_the_ID() == $rule['value'] );
+          } else {
+            $pass = ( get_the_ID() != $rule['value'] );
+          }
         }
         
+        // Post Type
         if ( $rule['type'] == 'post_type' ) {
-          $pass = ( is_singular( $rule['value'] ) || is_post_type_archive( $rule['value'] ) );
+          if ( $rule['opperator'] == 'equals' ) {
+            $pass = ( is_singular( $rule['value'] ) || is_post_type_archive( $rule['value'] ) );
+          } else {
+            $pass = ( ! is_singular( $rule['value'] ) && ! is_post_type_archive( $rule['value'] ) );
+          }
         }
         
+        // Taxonomy Term
         if ( $rule['type'] == 'category' ) { // 'taxonomy_term'
           $term = get_term( $rule['value'] );
           
           if ( ! empty( $term ) ) {
-            $pass = has_term( $rule['value'], $term->taxonomy );
+            if ( $rule['opperator'] == 'equals' ) {
+              $pass = has_term( $rule['value'], $term->taxonomy );
+            } else {
+              $pass = ( ! has_term( $rule['value'], $term->taxonomy ) );
+            }
           }
         }
+        
+        // URL 
+        if ( $rule['type'] == 'url' ) {
+          // $domain = $_SERVER['HTTP_HOST'];
+          // $path = $_SERVER['SCRIPT_NAME'];
+          // $qs = $_SERVER['QUERY_STRING'];
+          
+          // $url = 'http://' . $domain . $path . "?" . $queryString;
+          
+          
+          // if ( $rule['opperator'] == 'equals' ) {
+          //   $pass = has_term( $rule['value'], $term->taxonomy );
+          // } else {
+          //   $pass = ( ! has_term( $rule['value'], $term->taxonomy ) );
+          // }
+        }
+        
       }
       
       if ( $pass ) {
