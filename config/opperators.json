@@ -2,7 +2,7 @@
   {
     "id": "delay",
     "name": "Delay",
-    "placeholder": "0 seconds"
+    "placeholder": "0"
   },
   {
     "id": "element_id",
@@ -17,7 +17,7 @@
   {
     "id": "scroll",
     "name": "Scroll",
-    "placeholder": "100px"
+    "placeholder": "100"
   },
   {
     "id": "equals",
@@ -28,5 +28,10 @@
     "id": "not_equals",
     "name": "Not Equals",
     "placeholder": "id"
+  },
+  {
+    "id": "none",
+    "name": "None",
+    "placeholder": ""
   }
 ]

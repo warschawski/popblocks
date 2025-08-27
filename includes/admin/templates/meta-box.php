@@ -16,10 +16,11 @@
             parent: 'trigger',
             type: 'page_load',
             opperator: 'delay',
-            value: '0',
+            value: '',
+            suffix: 'seconds',
           },
         ]
-      },
+      }
     ],
     behaviorGroups: [
       {
@@ -30,7 +31,8 @@
             parent: 'behavior',
             type: 'page',
             opperator: 'equals',
-            value: '0',
+            value: '',
+            suffix: 'none',
           },
         ]
       },
@@ -101,6 +103,7 @@
           <x-component
             template="popup_conditionals"
             x-data="{ item: group}"
+            styles="global"
           ></x-component>
         </template>
       </div>
@@ -117,12 +120,13 @@
           <x-component
             template="popup_conditionals"
             x-data="{ item: group}"
+            styles="global"
           ></x-component>
         </template>
       </div>
     </div>
 
-    <div id="options-tab"
+    <!-- <div id="options-tab"
       x-bind:class="{ 'hidden': !isActiveTab('options') }"
     >
       <p>Additional settings</p>
@@ -165,7 +169,8 @@
           name="appointment"
         />
       </div>
-    </div>
+    </div> -->
+
   </div>
   
   <textarea name="popblocks_data" x-text="finalData()" style="width: 100%; height: 200px; margin-top: 40px;"></textarea>
@@ -174,7 +179,7 @@
 <template id="popup_conditionals">
   <div>
     <style>
-      .components-tab-panel {
+      /* .components-tab-panel {
         font-weight: 400;
         font-size: 13px;
         line-height: normal;
@@ -206,14 +211,18 @@
       .popup_condition_wrapper {
         display: flex;
         align-items: stretch;
-        width: 90%;
+        width: 100%;
         gap: 0.25rem;
       }
-      .popup_condition_button, .popup_trigger_condition select, .popup_trigger_condition input, .popup_trigger_condition p {
+      .popup_condition_button,
+      .popup_trigger_condition select,
+      .popup_trigger_condition input,
+      .popup_trigger_condition .input_group,
+      .popup_trigger_condition p {
         font-size: 13px;
         display: flex;
         align-items: center;
-        width: calc(33.333333333333%);
+        width: 100%;
         padding-left: 12px;
         padding-right: 12px;
         border: 1px solid #949494;
@@ -222,7 +231,33 @@
         margin: 0;
         width: 100%;
       }
-      .popup_condition_button.hidden, .popup_trigger_condition select.hidden, .popup_trigger_condition input.hidden, .popup_trigger_condition p.hidden {
+      .popup_trigger_condition .input_group.has_suffix {
+        position: relative;
+      }
+      .popup_trigger_condition .input_group.no_suffix .input_suffix {
+        display: none;
+      }
+      .popup_trigger_condition .input_group input {
+        padding-left: 0;
+        border: 0px;
+      }
+      .popup_trigger_condition .input_group.has_suffix .input_suffix {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        background-color: #dbdbdb;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 0 1px 1px 0;
+        border: 0;
+        border-left: 1px solid #94949460;
+      }
+      .popup_condition_button.hidden,
+      .popup_trigger_condition select.hidden,
+      .popup_trigger_condition input.hidden,
+      .popup_trigger_condition p.hidden {
         display: none;
       }
       .popup_trigger_group {
@@ -256,25 +291,7 @@
       .popup_condition_button.or-button {
         width: fit-content;
         padding: 6px 12px;
-      }
-      .popup_condition_remove {
-        position: absolute;
-        top: 2.5px;
-        right: calc(-12.5px);
-        width: 25px;
-        height: 25px;
-        color: var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));
-        border: 1px solid;
-        border-radius: 100px;
-        background-color: #fff;
-        cursor: pointer;
-        transform-origin: center;
-        display: none;
-      }
-      .popup_condition_remove:hover {
-        color: #dc143c;
-        background-color: #ffe4e9;
-      }
+      } */
     </style>
     <p x-show="gIndex !== 0">or</p>
     <template x-for="(rule, rIndex) in group.rules" :key="rule.id">
@@ -282,7 +299,36 @@
         <div x-show="rule.rule === 'or'">or</div>
         <div class="popup_trigger_condition">
           <div class="popup_condition_wrapper">
-            <select
+
+            <div class="components-input-control__container">
+              <select 
+                class="components-select-control__input"
+                x-model="rule.type"
+                x-on:change="updateRuleType(rule)"
+              >
+                <template
+                  x-for="option in $store.popups[rule.parent + 'Options']"
+                >
+                  <option
+                    x-bind:value="option.value"
+                    x-text="option.name"
+                    x-bind:selected="option.value == rule.type"
+                  ></option>
+                </template>
+              </select>
+              <span class="components-input-control__suffix">
+                <div data-wp-component="InputControlSuffixWrapper" class="components-input-control-suffix-wrapper">
+                  <div>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" aria-hidden="true" focusable="false">
+                      <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </span>
+              <div aria-hidden="true" class="components-input-control__backdrop"></div>
+            </div>
+
+            <!-- <select
               x-model="rule.type"
               x-on:change="updateRuleType(rule)"
             >
@@ -295,9 +341,41 @@
                   x-bind:selected="option.value == rule.type"
                 ></option>
               </template>
-            </select>
-            <select
+            </select> -->
+
+            <div 
+              class="components-input-control__container"
+              x-show="!['none', 'scroll'].includes(rule.opperator)"
+            >
+              <select 
+                class="components-select-control__input"
+                x-model="rule.opperator" 
+              >
+                <template
+                  x-for="opperatorOption in getOpperatorOptions(rule)"
+                >
+                  <option
+                    x-bind:value="opperatorOption.id"
+                    x-text="opperatorOption.name"
+                    x-bind:selected="opperatorOption.id == rule.opperator"
+                  ></option>
+                </template>
+              </select>
+              <span class="components-input-control__suffix">
+                <div data-wp-component="InputControlSuffixWrapper" class="components-input-control-suffix-wrapper">
+                  <div>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" aria-hidden="true" focusable="false">
+                      <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </span>
+              <div aria-hidden="true" class="components-input-control__backdrop"></div>
+            </div>
+
+            <!-- <select
               x-model="rule.opperator"
+              x-show="!['none', 'scroll'].includes(rule.opperator)"
             >
               <template
                 x-for="opperatorOption in getOpperatorOptions(rule)"
@@ -308,20 +386,54 @@
                   x-bind:selected="opperatorOption.id == rule.opperator"
                 ></option>
               </template>
-            </select>
+            </select> -->
+
             <template
               x-for="opperatorOption in getOpperatorOptions(rule)"
             >
-              <input
-                x-model="rule.value"
-                x-bind:placeholder="opperatorOption.placeholder"
-                x-show="rule.opperator == opperatorOption.id"
-              ></input>
+              <!-- <div 
+                class="input_group" 
+                :class="rule.suffix === 'none' ? 'no_suffix' : 'has_suffix'"
+                x-show="rule.opperator == opperatorOption.id && rule.opperator !== 'none'">
+                <input
+                  x-model="rule.value"
+                  x-bind:placeholder="opperatorOption.placeholder"
+                ></input>
+                <span 
+                  class="input_suffix" 
+                  x-text="rule.suffix" 
+                  x-show="rule.suffix !== 'none' && activeTab !== 'behavior'"
+                ></span>
+              </div> -->
+
+              <div 
+                class="components-input-control__container"
+                x-show="rule.opperator == opperatorOption.id && rule.opperator !== 'none'"
+              >
+                <input  
+                  class="components-input-control__input"
+                  type="text"
+                  x-model="rule.value"
+                  x-bind:placeholder="opperatorOption.placeholder"
+                />
+                <span 
+                  class="components-input-control__suffix"
+                >
+                  <div 
+                    class="components-unit-control__unit-label"
+                    x-text="rule.suffix" 
+                    x-show="rule.suffix !== 'none' && activeTab !== 'behavior'"
+                  ></div>
+                </span>
+                <div aria-hidden="true" class="components-input-control__backdrop"></div>
+              </div>
+
             </template>
           </div>
           <button
-            class="popup_condition_button components-button"
+            class="popup_condition_button and_button components-button is-primary"
             x-on:click="createRule(gIndex, rIndex)"
+            x-show="activeTab !== 'trigger'"
           >
             and
           </button>
@@ -332,9 +444,7 @@
               gIndex > 0
             "
             x-on:click="removeRule(gIndex, rIndex)"
-          >
-            -
-          </button>
+          ></button>
         </div>
 
       </div>
@@ -343,7 +453,7 @@
       x-show="gIndex == $data[groupName].length - 1"
     >
       <p>or</p>
-      <button class="popup_condition_button or-button components-button"
+      <button class="popup_condition_button or_button components-button is-primary"
         x-on:click="createGroup()"
       >
         Add New Group
