@@ -391,6 +391,7 @@ window.ruleController = function(data) {
       parent: groupName[0].rules[0].parent,
       type: groupName[0].rules[0].type,
       opperator: groupName[0].rules[0].opperator,
+      suffix: groupName[0].rules[0].suffix,
       value: groupName[0].rules[0].value,
     };
   }
@@ -423,11 +424,17 @@ window.ruleController = function(data) {
       return trigger.value == rule.type;
     });
 
-    if (selectedTrigger.opperators.includes(rule.opperator)) {
-      console.log(rule.opperator)
-    } else {
-      rule.opperator = selectedTrigger.opperators[0];
-    }
+    console.log('this is the selected trigger:' + JSON.stringify(selectedTrigger))
+
+    // if (selectedTrigger.opperators.includes(rule.opperator)) {
+    //   console.log(rule.opperator)
+    // } else {
+    //   rule.opperator = selectedTrigger.opperators[0];
+    // }
+
+    rule.opperator = selectedTrigger.opperators[0];
+    rule.suffix = selectedTrigger.suffix;
+
   }
 
   function getOpperatorOptions(rule) {

@@ -11,8 +11,11 @@
   {
     "name": "Exit Intent",
     "value": "exit_intent",
-    "opperators": null,
-    "type": null
+    "opperators": [
+      "none"
+    ],
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Idle Time",
@@ -30,7 +33,8 @@
       "element_id",
       "element_class"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Hover",
@@ -39,7 +43,8 @@
       "element_id",
       "element_class"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Element visibility",
@@ -48,7 +53,8 @@
       "element_id",
       "element_class"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Scroll",

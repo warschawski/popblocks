@@ -26,6 +26,52 @@ import Modal from 'formstone/jquery/modal';
     
     setTimeout(function() { PopBlocks.open(id); }, time * 1000);
   }
+
+  function handleIdleTime(id, group) {
+    let idleTime = 0;
+    let adminIdleTime = group.rules[0].value;
+    let idleInterval;
+
+    $(document).ready(function () {
+      // Increment the idle time counter every second.
+      idleInterval = setInterval(timerIncrement, 1000);
+
+      $(this).mousemove(function (e) {
+          idleTime = 0;
+      });
+      $(this).keypress(function (e) {
+          idleTime = 0;
+      });
+    });
+
+    function timerIncrement() {
+      idleTime++;
+      
+      if (idleTime > adminIdleTime) {
+        PopBlocks.open(id);
+        clearInterval(idleInterval);
+      }
+    }
+  }
+
+  function handleExitIntent(id) {
+    let $window = $(window);
+    let $body = $('body');
+    let mouseY;
+  
+    $body.on('mouseleave', (e) => {
+      mouseY = e.clientY;
+  
+      if (mouseY < 0) {
+        console.log('Exit Intent');
+        $window.trigger('exitintent');
+      }
+    });
+  
+    $window.on('exitintent', () => {
+      PopBlocks.open(id);
+    });
+  }
   
   // 
     
@@ -53,6 +99,14 @@ import Modal from 'formstone/jquery/modal';
         // Page Load
         if (group.rules[0].type == 'page_load') {
           handlePageLoad($el, id, data, group);
+        }
+
+        if (group.rules[0].type == 'idle_time') {
+          handleIdleTime(id, group);
+        }
+        
+        if (group.rules[0].type == 'exit_intent') {
+          handleExitIntent(id);
         }
         
       });
