@@ -30,6 +30,16 @@
     "placeholder": "id"
   },
   {
+    "id": "contains",
+    "name": "Contains",
+    "placeholder": "example.com"
+  },
+  {
+    "id": "not_contains",
+    "name": "Not Contains",
+    "placeholder": "example.com"
+  },
+  {
     "id": "none",
     "name": "None",
     "placeholder": ""

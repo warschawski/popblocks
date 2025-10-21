@@ -1,74 +1,61 @@
 [
   {
-    "name": "Page",
-    "value": "page",
-    "opperators": [
-      "equals",
-      "not_equals"
+    "name": "All the site",
+    "value": "all",
+    "operators": [
+      "none"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
-    "name": "Post",
+    "name": "Post, Page, CPT",
     "value": "post",
-    "opperators": [
+    "operators": [
       "equals",
       "not_equals"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
-    "name": "Category",
-    "value": "category",
-    "opperators": [
+    "name": "Category, Tag, Custom Taxonomy",
+    "value": "taxonomy",
+    "operators": [
       "equals",
       "not_equals"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
-    "name": "Tag",
-    "value": "tag",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "Post Type",
-    "value": "post_type",
-    "opperators": [
-      "equals",
-      "not_equals"
-    ],
-    "type": "text"
-  },
-  {
-    "name": "URL",
+    "name": "Custom URL",
     "value": "url",
-    "opperators": [
+    "operators": [
       "contains",
       "not_contains"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Browser Location",
     "value": "browser_location",
-    "opperators": [
+    "operators": [
       "equals",
       "not_equals"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   },
   {
     "name": "Browser Language",
     "value": "browser_language",
-    "opperators": [
+    "operators": [
       "equals",
       "not_equals"
     ],
-    "type": "text"
+    "type": "text",
+    "suffix": "none"
   }
 ]

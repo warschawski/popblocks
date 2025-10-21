@@ -14,7 +14,7 @@ class PopBlocks_Config {
   
   public $triggers = [];
   public $behaviors = [];
-  public $opperators = [];
+  public $operators = [];
 
   public static function get_instance() {
     if ( ! isset( self::$instance ) && ! ( self::$instance instanceof PopBlocks_Config ) ) {
@@ -34,7 +34,7 @@ class PopBlocks_Config {
   public function init() {
     $this->behaviors = $this->get_json( $this->plugin->get_path() . '/config/behaviors.json' );
     
-    $this->opperators = $this->get_json( $this->plugin->get_path() . 'config/opperators.json' );
+    $this->operators = $this->get_json( $this->plugin->get_path() . 'config/operators.json' );
     
     $this->triggers = $this->get_json( $this->plugin->get_path() . 'config/triggers.json' );
   }
@@ -48,7 +48,7 @@ class PopBlocks_Config {
   public static function admin_settings() {
     return json_encode( [
       'behaviors' => self::behaviors(),
-      'opperators' => self::opperators(),
+      'operators' => self::operators(),
       'triggers' => self::triggers(),
     ] );
   }
@@ -59,10 +59,10 @@ class PopBlocks_Config {
     return apply_filters( 'popblocks_config_behaviors', $instance->behaviors );
   }
   
-  public static function opperators() {
+  public static function operators() {
     $instance = self::get_instance();
     
-    return apply_filters( 'popblocks_config_opperators', $instance->opperators );
+    return apply_filters( 'popblocks_config_operators', $instance->operators );
   }
   
   public static function triggers() {

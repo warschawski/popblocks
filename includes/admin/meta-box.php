@@ -89,7 +89,7 @@ class PopBlocks_Meta_Box {
     //   return;
     // }
   
-    $data = sanitize_text_field( $_POST['popblocks_data'] );
+    $data = sanitize_text_field( $_POST['popblocks_data'] ?? '' );
     
     update_post_meta( $post_id, 'popblocks_data', $data );
   }

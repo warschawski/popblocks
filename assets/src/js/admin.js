@@ -10,7 +10,7 @@ Alpine.plugin(component)
 
 1. User adds row
 2. User selects trigger type
-  - Update Opperator options
+  - Update operator options
 3. User enters value
 
 // Trigger Structures
@@ -19,7 +19,7 @@ triggers = [
   {
     "name": "Page Load",
     "value": "page_load",
-    "opperators": [
+    "operators": [
       "delay"
     ],
     "type": "text"
@@ -27,7 +27,7 @@ triggers = [
   {
     "name": "Idle Time",
     "value": "idle_time",
-    "opperators": [
+    "operators": [
       "delay"
     ],
     "type": "text"
@@ -35,7 +35,7 @@ triggers = [
   {
     "name": "Click",
     "value": "click",
-    "opperators": [
+    "operators": [
       "element_id",
       "element_class"
     ],
@@ -46,16 +46,16 @@ triggers = [
 
 1. User adds row
 2. User selects behavior type
-  - Update Opperator options
+  - Update operator options
   - Update Value options
-3. User selects opperator
+3. User selects operator
 4. User selects value
 
 behaviors = [
   {
     "name": "Post",
     "value": "post_id",
-    "opperators": [
+    "operators": [
       "equals",
       "not_equals"
     ],
@@ -65,7 +65,7 @@ behaviors = [
 ]
 
 
-opperators = [
+operators = [
   {
     "id": "delay",
     "name": "Delay",
@@ -97,12 +97,12 @@ opperators = [
       "rules": [
         {
           "param": "post_type",
-          "opperator": "equals",
+          "operator": "equals",
           "value": "post",
         },
         {
           "param": "post_type",
-          "opperator": "equals",
+          "operator": "equals",
           "value": "post",
         }
       ]
@@ -111,12 +111,12 @@ opperators = [
       "rules": [
         {
           "param": "post_type",
-          "opperator": "equals",
+          "operator": "equals",
           "value": "post",
         },
         {
           "param": "post_type",
-          "opperator": "equals",
+          "operator": "equals",
           "value": "post",
         }
       ]
@@ -131,7 +131,7 @@ opperators = [
 //   {
 //     "name": "Page Load",
 //     "value": "page_load",
-//     "opperators": [
+//     "operators": [
 //       "delay"
 //     ],
 //     "type": "text"
@@ -139,7 +139,7 @@ opperators = [
 //   {
 //     "name": "Exit Intent",
 //     "value": "exit_intent",
-//     "opperators": [
+//     "operators": [
 //       "delay"
 //     ],
 //     "type": "text"
@@ -147,7 +147,7 @@ opperators = [
 //   {
 //     "name": "Idle Time",
 //     "value": "idle_time",
-//     "opperators": [
+//     "operators": [
 //       "delay"
 //     ],
 //     "type": "text"
@@ -155,7 +155,7 @@ opperators = [
 //   {
 //     "name": "Click",
 //     "value": "click",
-//     "opperators": [
+//     "operators": [
 //       "element_id",
 //       "element_class"
 //     ],
@@ -164,7 +164,7 @@ opperators = [
 //   {
 //     "name": "Hover",
 //     "value": "hover",
-//     "opperators": [
+//     "operators": [
 //       "element_id",
 //       "element_class"
 //     ],
@@ -173,7 +173,7 @@ opperators = [
 //   {
 //     "name": "Element visibility",
 //     "value": "element_visibility",
-//     "opperators": [
+//     "operators": [
 //       "element_id",
 //       "element_class"
 //     ],
@@ -182,7 +182,7 @@ opperators = [
 //   {
 //     "name": "Scroll",
 //     "value": "scroll",
-//     "opperators": [
+//     "operators": [
 //       "scroll"
 //     ],
 //     "type": "text"
@@ -193,7 +193,7 @@ opperators = [
 //   {
 //     "name": "Page",
 //     "value": "page",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -202,7 +202,7 @@ opperators = [
 //   {
 //     "name": "Post",
 //     "value": "post",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -211,7 +211,7 @@ opperators = [
 //   {
 //     "name": "Category",
 //     "value": "category",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -220,7 +220,7 @@ opperators = [
 //   {
 //     "name": "Tag",
 //     "value": "tag",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -229,7 +229,7 @@ opperators = [
 //   {
 //     "name": "Post Type",
 //     "value": "post_type",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -238,7 +238,7 @@ opperators = [
 //   {
 //     "name": "Browser Location",
 //     "value": "browser_location",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -247,7 +247,7 @@ opperators = [
 //   {
 //     "name": "Browser Language",
 //     "value": "browser_language",
-//     "opperators": [
+//     "operators": [
 //       "equals",
 //       "not_equals"
 //     ],
@@ -255,7 +255,7 @@ opperators = [
 //   }
 // ];
 
-// let OPPERATOR_CONFIG = [
+// let OPERATOR_CONFIG = [
 //   {
 //     "id": "delay",
 //     "name": "Delay",
@@ -289,8 +289,10 @@ opperators = [
 // ];
 
 Alpine.store('popups', {
-    triggerGroups: [],
-    behaviorGroups: [],
+    id: 0,
+    triggers: [],
+    behaviors: [],
+    options: [],
     // Todo store for options?
     init: function() {
       console.log('Init: PopUps Store');
@@ -299,24 +301,48 @@ Alpine.store('popups', {
 
       if (typeof window.PopUpsData !== 'undefined') {
 
-        if (typeof window.PopUpsData.triggerGroups !== 'undefined') {
-          this.triggerGroups = window.PopUpsData.triggerGroups;
-          console.log(this.triggerGroups[0]);
+        if (typeof window.PopUpsData.id !== 'undefined') {
+          this.id = window.PopUpsData.id;
+          console.log(this.id);
+        }
+        
+        if (typeof window.PopUpsData.triggers !== 'undefined') {
+          this.triggers = window.PopUpsData.triggers;
+          console.log(this.triggers[0]);
         }
 
-        if (typeof window.PopUpsData.behaviorGroups !== 'undefined') {
-          this.behaviorGroups = window.PopUpsData.behaviorGroups;
-          console.log(this.behaviorGroups);
+        if (typeof window.PopUpsData.behaviors !== 'undefined') {
+          this.behaviors = window.PopUpsData.behaviors;
+          console.log(this.behaviors);
+        }
+        
+        if (typeof window.PopUpsData.options !== 'undefined') {
+          this.options = window.PopUpsData.options;
+          console.log(this.options);
         }
       }
 
       this.behaviorOptions = window.PopBlocksConfig.behaviors;
-      this.opperatorOptions = window.PopBlocksConfig.opperators;
+      this.operatorOptions = window.PopBlocksConfig.operators;
       this.triggerOptions = window.PopBlocksConfig.triggers;
     },
 });
 
+// window.popupsOptions = function(data) {
+//   function init() {
+//     console.log('Popups Options: Init');
+//     console.log(data);
+//   }
 
+//   let isChecked = !data.isChecked;
+
+//   console.log(isChecked)
+
+//   return {
+//     init: init,
+//     active: isChecked,
+//   }
+// }
 
 window.popupsMetaBox = function(data) {
 
@@ -326,8 +352,10 @@ window.popupsMetaBox = function(data) {
   
   function finalData() {
     return JSON.stringify({
-      triggerGroups: this.$store.popups.triggerGroups,
-      behaviorGroups: this.$store.popups.behaviorGroups,
+      id: this.$store.popups.id,
+      triggers: this.$store.popups.triggers,
+      behaviors: this.$store.popups.behaviors,
+      options: this.$store.popups.options,
     });
   }
 
@@ -374,15 +402,25 @@ window.ruleController = function(data) {
   function init() {
     console.log('Init: Rule Controller');
 
-    this.trGroups = this.$store.popups.triggerGroups;
-    this.beGroups = this.$store.popups.behaviorGroups;
+    this.idGroups = this.$store.popups.triggers;
+    this.trGroups = this.$store.popups.triggers;
+    this.beGroups = this.$store.popups.behaviors;
+    this.opGroups = this.$store.popups.options;
 
-    this.$watch('$store.popups.triggerGroups', (val) => {
-      this.trGroups = this.$store.popups.triggerGroups;
+    this.$watch('$store.popups.id', (val) => {
+      this.idGroups = this.$store.popups.id;
     });
-    this.$watch('$store.popups.behaviorGroups', (val) => {
-      this.beGroups = this.$store.popups.behaviorGroups;
+    this.$watch('$store.popups.triggers', (val) => {
+      this.trGroups = this.$store.popups.triggers;
     });
+    this.$watch('$store.popups.behaviors', (val) => {
+      this.beGroups = this.$store.popups.behaviors;
+    });
+    this.$watch('$store.popups.options', (val) => {
+      this.opGroups = this.$store.popups.options;
+    });
+
+    console.log(this.opGroups);
   }
 
   function getBaseRule(groupName) {
@@ -390,7 +428,7 @@ window.ruleController = function(data) {
       id: 'id' + (new Date()).getTime(),
       parent: groupName[0].rules[0].parent,
       type: groupName[0].rules[0].type,
-      opperator: groupName[0].rules[0].opperator,
+      operator: groupName[0].rules[0].operator,
       suffix: groupName[0].rules[0].suffix,
       value: groupName[0].rules[0].value,
     };
@@ -406,7 +444,7 @@ window.ruleController = function(data) {
   }
 
   function createRule(gIndex, rIndex) {
-    this[groupName][gIndex].rules.splice(rIndex, 0, getBaseRule(this[groupName]));
+    this[groupName][gIndex].rules.splice(rIndex + 1, 0, getBaseRule(this[groupName]));
 
     console.log(optionsName);
   }
@@ -426,30 +464,32 @@ window.ruleController = function(data) {
 
     console.log('this is the selected trigger:' + JSON.stringify(selectedTrigger))
 
-    // if (selectedTrigger.opperators.includes(rule.opperator)) {
-    //   console.log(rule.opperator)
+    // if (selectedTrigger.operators.includes(rule.operator)) {
+    //   console.log(rule.operator)
     // } else {
-    //   rule.opperator = selectedTrigger.opperators[0];
+    //   rule.operator = selectedTrigger.operators[0];
     // }
 
-    rule.opperator = selectedTrigger.opperators[0];
+    rule.operator = selectedTrigger.operators[0];
     rule.suffix = selectedTrigger.suffix;
 
   }
 
-  function getOpperatorOptions(rule) {
+  function getOperatorOptions(rule) {
     let selectedTrigger = _.find(this.$store.popups[rule.parent + 'Options'], (trigger) => {
       return trigger.value == rule.type;
     });
 
-    return _.filter(this.$store.popups.opperatorOptions, (opperator) => {
-      return selectedTrigger.opperators.indexOf(opperator.id) > -1;
+    return _.filter(this.$store.popups.operatorOptions, (operator) => {
+      return selectedTrigger.operators.indexOf(operator.id) > -1;
     });
   }
 
   return {
+    idGroups: [],
     trGroups: [],
     beGroups: [],
+    opGroups: [],
     //
     init: init,
     createGroup: createGroup,
@@ -457,7 +497,7 @@ window.ruleController = function(data) {
     removeRule: removeRule,
 
     updateRuleType: updateRuleType,
-    getOpperatorOptions: getOpperatorOptions,
+    getOperatorOptions: getOperatorOptions,
 
     groupName: groupName,
   };

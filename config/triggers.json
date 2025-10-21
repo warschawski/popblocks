@@ -2,7 +2,7 @@
   {
     "name": "Page Load",
     "value": "page_load",
-    "opperators": [
+    "operators": [
       "delay"
     ],
     "type": "number",
@@ -11,7 +11,7 @@
   {
     "name": "Exit Intent",
     "value": "exit_intent",
-    "opperators": [
+    "operators": [
       "none"
     ],
     "type": "text",
@@ -20,7 +20,7 @@
   {
     "name": "Idle Time",
     "value": "idle_time",
-    "opperators": [
+    "operators": [
       "delay"
     ],
     "type": "number",
@@ -29,7 +29,7 @@
   {
     "name": "Click",
     "value": "click",
-    "opperators": [
+    "operators": [
       "element_id",
       "element_class"
     ],
@@ -39,7 +39,7 @@
   {
     "name": "Hover",
     "value": "hover",
-    "opperators": [
+    "operators": [
       "element_id",
       "element_class"
     ],
@@ -49,7 +49,7 @@
   {
     "name": "Element visibility",
     "value": "element_visibility",
-    "opperators": [
+    "operators": [
       "element_id",
       "element_class"
     ],
@@ -59,7 +59,7 @@
   {
     "name": "Scroll",
     "value": "scroll",
-    "opperators": [
+    "operators": [
       "scroll"
     ],
     "type": "number",

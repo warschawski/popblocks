@@ -41,9 +41,11 @@ class PopBlocks_Display {
     $all = PopBlocks_Cache::get_all();
     
     foreach ( $all as $popup ) {
-      $render = $this->checkBehavior( $popup['data']['behaviorGroups'] );
+      $behaviors = $this->filterBehaviors( $popup['data']['behaviors'] );
       
-      if ( $render ) {
+      if ( ! empty( $behaviors ) ) {
+        $popup['data']['behaviors'] = $behaviors;
+        
         $this->active[] = $popup;
       }
     }
@@ -83,31 +85,40 @@ class PopBlocks_Display {
     wp_reset_postdata();
   }
   
-  // 
-  
-  public function checkBehavior( $groups ) {
-    $render = false;
+  //  
+  //  CHECK IN HERE BEFORE THE COOKIE? 
+  // Need to rework to pass back a 'filtered' copy of the groups contain only the groups that pass server checks
+
+  public function filterBehaviors( $groups ) {
+    $filteredGroups = [];
     
     foreach ( $groups as $group ) {
-      $pass = false;
-      
+      $group_pass = true;
+
       foreach ( $group['rules'] as $rule ) {
+        print_r($rule);
+        $rule_pass = false;
+
+        // All
+        if ( $rule['type'] == 'all' ) {
+          $rule_pass = true;
+        }
         
         // Post Object
         if ( $rule['type'] == 'post' ) {
-          if ( $rule['opperator'] == 'equals' ) {
-            $pass = ( get_the_ID() == $rule['value'] );
+          if ( $rule['operator'] == 'equals' ) {
+            $rule_pass = ( get_the_ID() == $rule['value'] );
           } else {
-            $pass = ( get_the_ID() != $rule['value'] );
+            $rule_pass = ( get_the_ID() != $rule['value'] );
           }
         }
         
         // Post Type
         if ( $rule['type'] == 'post_type' ) {
-          if ( $rule['opperator'] == 'equals' ) {
-            $pass = ( is_singular( $rule['value'] ) || is_post_type_archive( $rule['value'] ) );
+          if ( $rule['operator'] == 'equals' ) {
+            $rule_pass = ( is_singular( $rule['value'] ) || is_post_type_archive( $rule['value'] ) );
           } else {
-            $pass = ( ! is_singular( $rule['value'] ) && ! is_post_type_archive( $rule['value'] ) );
+            $rule_pass = ( ! is_singular( $rule['value'] ) && ! is_post_type_archive( $rule['value'] ) );
           }
         }
         
@@ -116,15 +127,16 @@ class PopBlocks_Display {
           $term = get_term( $rule['value'] );
           
           if ( ! empty( $term ) ) {
-            if ( $rule['opperator'] == 'equals' ) {
-              $pass = has_term( $rule['value'], $term->taxonomy );
+            if ( $rule['operator'] == 'equals' ) {
+              $rule_pass = has_term( $rule['value'], $term->taxonomy );
             } else {
-              $pass = ( ! has_term( $rule['value'], $term->taxonomy ) );
+              $rule_pass = ( ! has_term( $rule['value'], $term->taxonomy ) );
             }
           }
         }
         
         // URL 
+        // Needs to be moved to front end, cant repliably check url on backend
         if ( $rule['type'] == 'url' ) {
           // $domain = $_SERVER['HTTP_HOST'];
           // $path = $_SERVER['SCRIPT_NAME'];
@@ -132,24 +144,64 @@ class PopBlocks_Display {
           
           // $url = 'http://' . $domain . $path . "?" . $queryString;
           
-          
-          // if ( $rule['opperator'] == 'equals' ) {
-          //   $pass = has_term( $rule['value'], $term->taxonomy );
+          // if ( $rule['operator'] == 'contains' ) {
+          //   $rule_pass = ( strpos($url, $rule['value']) !== false );
           // } else {
-          //   $pass = ( ! has_term( $rule['value'], $term->taxonomy ) );
+          //   $rule_pass = ( ! strpos($url, $rule['value']) === false );
           // }
+
+          $rule_pass = true;
+        }
+
+        // Browser Language
+        if ( $rule['type'] == 'browser_language' ) {
+          // if (isset($_COOKIE['user-lang'])) {
+          //   $user_lang = $_COOKIE['user-lang'];
+          //   $user_lang = stripslashes($user_lang);
+          //   $user_lang = trim($user_lang, '"');
+
+          //   if ( $rule['operator'] == 'equals' ) {
+          //     $group_pass = ( $user_lang == $rule['value'] );
+          //   } else {
+          //     $group_pass = ( $user_lang != $rule['value'] );
+          //   }
+          // }
+
+          $rule_pass = true;
+        }
+        
+        // Browser Location
+        // if ( $rule['type'] == 'browser_location' ) {
+        //   if (isset($_COOKIE['user-geo'])) {
+        //     $user_location = $_COOKIE['user-geo'];
+
+        //     var_dump($user_location);
+
+        //     if ( $rule['operator'] == 'equals' ) {
+        //       $rule_pass = ( $user_location == $rule['value'] );
+        //     } else {
+        //       $rule_pass = ( $user_location != $rule['value'] );
+        //     }
+        //   }
+        // }
+
+        if ( ! $rule_pass ) {
+          $group_pass = false;
+          break;
         }
         
       }
       
-      if ( $pass ) {
-        $render = true;
+      if ( $group_pass ) {
+        $filteredGroups[] = $group;
       }
     }
+
+    //print_r($filteredGroups);
     
-    return $render;
+    return $filteredGroups;
   }
-  
+
 }
 
 PopBlocks_Display::get_instance();

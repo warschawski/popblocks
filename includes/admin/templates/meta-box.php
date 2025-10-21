@@ -7,7 +7,8 @@
   window.PopUpsData = <?php echo $popup_data; ?>
   <?php else : ?>
   window.PopUpsData = {
-    triggerGroups: [
+    id: <?php echo $post->ID; ?>,
+    triggers: [
       {
         id: 'id' + (new Date()).getTime() + 2,
         rules: [
@@ -15,28 +16,37 @@
             id: 'id' + (new Date()).getTime(),
             parent: 'trigger',
             type: 'page_load',
-            opperator: 'delay',
+            operator: 'delay',
             value: '',
             suffix: 'seconds',
           },
         ]
       }
     ],
-    behaviorGroups: [
+    behaviors: [
       {
         id: 'id' + (new Date()).getTime() + 2,
         rules: [
           {
             id: 'id' + (new Date()).getTime(),
             parent: 'behavior',
-            type: 'page',
-            opperator: 'equals',
+            type: 'all',
+            operator: 'none',
             value: '',
             suffix: 'none',
           },
         ]
       },
     ],
+    options: {
+      id: 'id' + (new Date()).getTime(),
+      active: false,
+      name: '',
+      duration: {
+        value: 0,
+        unit: 'hours'
+      }
+    },
   };
   <?php endif; ?>
 </script>
@@ -102,7 +112,7 @@
         <template x-for="(group, gIndex) in trGroups" :key="group.id">
           <x-component
             template="popup_conditionals"
-            x-data="{ item: group}"
+            x-data="{ item: group }"
             styles="global"
           ></x-component>
         </template>
@@ -119,18 +129,134 @@
         <template x-for="(group, gIndex) in beGroups" :key="group.id">
           <x-component
             template="popup_conditionals"
-            x-data="{ item: group}"
+            x-data="{ item: group }"
             styles="global"
           ></x-component>
         </template>
       </div>
     </div>
 
-    <!-- <div id="options-tab"
+    <div
+      id="options-tab"
       x-bind:class="{ 'hidden': !isActiveTab('options') }"
+      x-data="PopUpsData.options"
     >
-      <p>Additional settings</p>
-      <div class="temp-options">
+      <div
+        class="options_tab_wrapper"
+        
+      >
+        <div 
+          class="flag_toggle_wrapper components-flex components-h-stack"
+        >
+          <span
+            class="components-form-toggle"
+            x-bind:class="{ 'is-checked': active }"
+          >
+            <input 
+              class="components-form-toggle__input"
+              type="checkbox"
+              id="cookie_flag"
+              name="cookie_flag"
+              x-model="active"
+            >
+            <span class="components-form-toggle__track"></span>
+            <span class="components-form-toggle__thumb"></span>
+          </span>
+          <label class="components-flex-item components-flex-block components-toggle-control__label" for="cookie_flag">
+            Cookie Flag
+          </label>
+        </div>
+
+        <div
+          class="cookie_settings"
+          x-show="active"
+        >
+          <div class="components-flex components-input-base">
+            <div class="components-flex-item">
+              <label 
+                for="cookie-name" 
+                class="components-truncate components-text components-input-control__label"
+              >
+                Cookie Name
+              </label>
+            </div>
+            <div 
+              class="components-input-control__container"
+            >
+              <input  
+                id="cookie-name"
+                class="components-input-control__input"
+                type="text"
+                x-model="name"
+                x-bind:placeholder="name"
+              />
+              <!-- <input  
+                id="cookie-name"
+                class="components-input-control__input"
+                type="text"
+                x-model="cookie.name"
+                x-bind:placeholder="cookie.placeholder"
+              /> -->
+
+              <!-- <span 
+                class="components-input-control__suffix"
+              >
+                <div 
+                  class="components-unit-control__unit-label"
+                  x-text="rule.suffix" 
+                ></div>
+              </span> -->
+              <div aria-hidden="true" class="components-input-control__backdrop"></div>
+            </div>
+          </div>
+
+          <div class="components-flex components-input-base">
+
+            <div class="components-flex-item">
+              <label 
+                for="cookie-time" 
+                class="components-truncate components-text components-input-control__label"
+              >
+                Cookie Time
+              </label>
+            </div>
+            <div 
+              class="components-input-control__container"
+            >
+              <input  
+                id="cookie-time"
+                class="components-input-control__input"
+                type="number"
+                placeholder="0"
+                x-model="duration.value"
+              />
+              <span 
+                class="components-input-control__suffix"
+              >
+                <!-- <div 
+                  class="components-unit-control__unit-label"
+                >days</div> -->
+                <select 
+                  class="components-unit-control__select" 
+                  aria-label="Select unit"
+                  x-model="duration.unit"
+                >
+                  <option value="hours">hours</option>
+                  <option value="days">days</option>
+                  <option value="weeks">weeks</option>
+                  <option value="months">months</option>
+                </select>
+              </span>
+              <div aria-hidden="true" class="components-input-control__backdrop"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- <div class="temp-options">
         <label for="start">Start date:</label>
         <input
           type="date"
@@ -168,8 +294,8 @@
           id="appointment"
           name="appointment"
         />
-      </div>
-    </div> -->
+      </div> -->
+    </div>
 
   </div>
   
@@ -293,10 +419,10 @@
         padding: 6px 12px;
       } */
     </style>
-    <p x-show="gIndex !== 0">or</p>
+    <p x-show="gIndex !== 0" class="or_group_separator">or</p>
     <template x-for="(rule, rIndex) in group.rules" :key="rule.id">
       <div class="popup_rule_group">
-        <div x-show="rule.rule === 'or'">or</div>
+        <div x-show="rule.rule === 'or'" class="or_group_separator">or</div>
         <div class="popup_trigger_condition">
           <div class="popup_condition_wrapper">
 
@@ -345,24 +471,24 @@
 
             <div 
               class="components-input-control__container"
-              x-show="!['none', 'scroll'].includes(rule.opperator)"
+              x-show="!['none', 'scroll'].includes(rule.operator)"
             >
               <select 
                 class="components-select-control__input"
-                x-model="rule.opperator" 
+                x-model="rule.operator" 
               >
                 <template
-                  x-for="opperatorOption in getOpperatorOptions(rule)"
+                  x-for="operatorOption in getOperatorOptions(rule)"
                 >
                   <option
-                    x-bind:value="opperatorOption.id"
-                    x-text="opperatorOption.name"
-                    x-bind:selected="opperatorOption.id == rule.opperator"
+                    x-bind:value="operatorOption.id"
+                    x-text="operatorOption.name"
+                    x-bind:selected="operatorOption.id == rule.operator"
                   ></option>
                 </template>
               </select>
               <span class="components-input-control__suffix">
-                <div data-wp-component="InputControlSuffixWrapper" class="components-input-control-suffix-wrapper">
+                <div class="components-input-control-suffix-wrapper">
                   <div>
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" aria-hidden="true" focusable="false">
                       <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
@@ -374,30 +500,30 @@
             </div>
 
             <!-- <select
-              x-model="rule.opperator"
-              x-show="!['none', 'scroll'].includes(rule.opperator)"
+              x-model="rule.operator"
+              x-show="!['none', 'scroll'].includes(rule.operator)"
             >
               <template
-                x-for="opperatorOption in getOpperatorOptions(rule)"
+                x-for="operatorOption in getOperatorOptions(rule)"
               >
                 <option
-                  x-bind:value="opperatorOption.id"
-                  x-text="opperatorOption.name"
-                  x-bind:selected="opperatorOption.id == rule.opperator"
+                  x-bind:value="operatorOption.id"
+                  x-text="operatorOption.name"
+                  x-bind:selected="operatorOption.id == rule.operator"
                 ></option>
               </template>
             </select> -->
 
             <template
-              x-for="opperatorOption in getOpperatorOptions(rule)"
+              x-for="operatorOption in getOperatorOptions(rule)"
             >
               <!-- <div 
                 class="input_group" 
                 :class="rule.suffix === 'none' ? 'no_suffix' : 'has_suffix'"
-                x-show="rule.opperator == opperatorOption.id && rule.opperator !== 'none'">
+                x-show="rule.operator == operatorOption.id && rule.operator !== 'none'">
                 <input
                   x-model="rule.value"
-                  x-bind:placeholder="opperatorOption.placeholder"
+                  x-bind:placeholder="operatorOption.placeholder"
                 ></input>
                 <span 
                   class="input_suffix" 
@@ -408,13 +534,13 @@
 
               <div 
                 class="components-input-control__container"
-                x-show="rule.opperator == opperatorOption.id && rule.opperator !== 'none'"
+                x-show="rule.operator == operatorOption.id && rule.operator !== 'none'"
               >
                 <input  
                   class="components-input-control__input"
                   type="text"
                   x-model="rule.value"
-                  x-bind:placeholder="opperatorOption.placeholder"
+                  x-bind:placeholder="operatorOption.placeholder"
                 />
                 <span 
                   class="components-input-control__suffix"
@@ -437,14 +563,27 @@
           >
             and
           </button>
-          <button class="popup_condition_remove remove-button"
+          <!-- <button class="popup_condition_remove remove-button"
             x-show="
               (gIndex == 0 && group.rules.length > 1) ||
               (gIndex == 0 && $data[groupName].length > 1) ||
               gIndex > 0
             "
             x-on:click="removeRule(gIndex, rIndex)"
-          ></button>
+          ></button> -->
+          <button 
+            type="button" 
+            aria-disabled="false" 
+            class="popup_condition_remove components-button is-next-40px-default-size is-secondary is-destructive"\
+            x-show="
+              (gIndex == 0 && group.rules.length > 1) ||
+              (gIndex == 0 && $data[groupName].length > 1) ||
+              gIndex > 0
+            "
+            x-on:click="removeRule(gIndex, rIndex)"
+          >
+            Delete
+          </button>
         </div>
 
       </div>
