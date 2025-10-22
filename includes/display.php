@@ -85,9 +85,7 @@ class PopBlocks_Display {
     wp_reset_postdata();
   }
   
-  //  
-  //  CHECK IN HERE BEFORE THE COOKIE? 
-  // Need to rework to pass back a 'filtered' copy of the groups contain only the groups that pass server checks
+  //
 
   public function filterBehaviors( $groups ) {
     $filteredGroups = [];
@@ -96,7 +94,6 @@ class PopBlocks_Display {
       $group_pass = true;
 
       foreach ( $group['rules'] as $rule ) {
-        print_r($rule);
         $rule_pass = false;
 
         // All
@@ -135,38 +132,13 @@ class PopBlocks_Display {
           }
         }
         
-        // URL 
-        // Needs to be moved to front end, cant repliably check url on backend
+        // URL
         if ( $rule['type'] == 'url' ) {
-          // $domain = $_SERVER['HTTP_HOST'];
-          // $path = $_SERVER['SCRIPT_NAME'];
-          // $qs = $_SERVER['QUERY_STRING'];
-          
-          // $url = 'http://' . $domain . $path . "?" . $queryString;
-          
-          // if ( $rule['operator'] == 'contains' ) {
-          //   $rule_pass = ( strpos($url, $rule['value']) !== false );
-          // } else {
-          //   $rule_pass = ( ! strpos($url, $rule['value']) === false );
-          // }
-
           $rule_pass = true;
         }
 
         // Browser Language
         if ( $rule['type'] == 'browser_language' ) {
-          // if (isset($_COOKIE['user-lang'])) {
-          //   $user_lang = $_COOKIE['user-lang'];
-          //   $user_lang = stripslashes($user_lang);
-          //   $user_lang = trim($user_lang, '"');
-
-          //   if ( $rule['operator'] == 'equals' ) {
-          //     $group_pass = ( $user_lang == $rule['value'] );
-          //   } else {
-          //     $group_pass = ( $user_lang != $rule['value'] );
-          //   }
-          // }
-
           $rule_pass = true;
         }
         
@@ -189,15 +161,13 @@ class PopBlocks_Display {
           $group_pass = false;
           break;
         }
-        
+
       }
       
       if ( $group_pass ) {
         $filteredGroups[] = $group;
       }
     }
-
-    //print_r($filteredGroups);
     
     return $filteredGroups;
   }

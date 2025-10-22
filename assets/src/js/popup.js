@@ -1,15 +1,9 @@
-// import Mediaquery from 'formstone/jquery/mediaquery';
 import Modal from 'formstone/jquery/modal';
 import Cookie from 'formstone/jquery/cookie';
 
 (function($, window) {
 
   let userLanguage = navigator.language.split('-')[0];
-  
-  // $.cookie('set', 'user-lang', JSON.stringify(userLang), {
-  //   path: '/',
-  //   expires: (1000 * 60 * 60 * 24), // 24 hours
-  // });
 
   //
 
@@ -29,8 +23,6 @@ import Cookie from 'formstone/jquery/cookie';
     location = JSON.parse(geo);
   } catch(e) {}
 
-  // if (cached && location && cached.location.lat == location.lat && cached.location.lng == location.lng) {
-  //   renderCommunities(cached);
   if (location) {
      console.log(location);
   } else {
@@ -88,6 +80,7 @@ import Cookie from 'formstone/jquery/cookie';
   }
 
   //
+
   function verifyBehaviorAndCookie(id) {
     let data = $(`[data-popblocks-id="${id}"]`).data('popblocks-data');
 
@@ -177,7 +170,6 @@ import Cookie from 'formstone/jquery/cookie';
     console.log(group.rules[0])
 
     $(document).ready(function () {
-      // Increment the idle time counter every second.
       idleInterval = setInterval(timerIncrement, 1000);
 
       $(this).mousemove(function (e) {
@@ -287,7 +279,6 @@ import Cookie from 'formstone/jquery/cookie';
     });
 
     // Check Visibilty
-
     $.each(visibilityCollection, (index, item) => {
       if (!item.opened) {
         let $targets = getSelector(item.selector, item.operator);
@@ -341,9 +332,6 @@ import Cookie from 'formstone/jquery/cookie';
       scroll: handleScroll,
     };
     
-    // TODO: Check firing rules  
-    // TODO: Check cookies?
-    
     let $triggersHandles = $('.popblocks-trigger');
 
     console.log($triggersHandles)
@@ -357,106 +345,12 @@ import Cookie from 'formstone/jquery/cookie';
       let $el = $(el);
       let id = $el.data('popblocks-id');
       let data = $el.data('popblocks-data');
-      
-      console.log(id, data);
-      
-      //
-
-      // let cookieActive = data.options.active;
-      // let cookieName = data.options.name;
-      // let cookieDurationValue = Number(data.options.duration.value);
-      // let cookieDurationUnit = data.options.duration.unit;
-
-      // if ( cookieDurationUnit === 'months' ) {
-      //   cookieDurationValue *= 730;
-      // } else if ( cookieDurationUnit === 'weeks' ) {
-      //   cookieDurationValue *= 168;
-      // } else if ( cookieDurationUnit === 'days' ) {
-      //   cookieDurationValue *= 24;
-      // } else {
-      //   cookieDurationValue *= 1;
-      // }
-
-      //
-
-      console.log('data', data);
 
       const cookieActive = data.options.active;
       const cookieName = data.options.name;
-      // const cookieDuration = data.options.duration;
-      // const cookieDurationHours = cookieActive ? convertDurationToHours(cookieDuration.value, cookieDuration.unit) : '';
-      
-      // let popupCookie = $.cookie('get', cookieName);
-      
-      // if (data.id === id && !popupCookie) {
-        initTriggers(id, data.triggers);
-      //   if(cookieActive) {
-      //     setPopupCookie(cookieName, cookieDurationHours);
-      //     popupCookie = false;
-      //   }
-      // }
 
-      //
-
-      // if ( data.id === id && ! popupCookie && cookieActive) {
-        
-      //   // HERE ALL THE TRIGGERS 
-
-      //   $.cookie('set', cookieName, JSON.stringify(cookieDurationValue), {
-      //     path: '/',
-      //     expires: (1000 * 60 * 60 * cookieDurationValue),
-      //   });
-      // }
-      
-      // $.each(data.triggers, (ti, group) => {
-        
-      //   // Page Load
-      //   if (group.rules[0].type == 'page_load') {
-      //     handlePageLoad(id, group);
-      //   }
-
-      //   if (group.rules[0].type == 'idle_time') {
-      //     handleIdleTime(id, group);
-      //   }
-        
-      //   if (group.rules[0].type == 'exit_intent') {
-      //     handleExitIntent(id, group);
-      //   }
-        
-      //   if (group.rules[0].type == 'click') {
-      //     handleClick(id, group);
-      //   }
-        
-      //   if (group.rules[0].type == 'hover') {
-      //     handleHover(id, group);
-      //   }
-        
-      //   if (group.rules[0].type == 'element_visibility') {
-      //     handleElementVisibility(id, group);
-      //   }
-
-      //   if (group.rules[0].type == 'scroll') {
-      //     handleScroll(id, group);
-      //   }
-        
-      // });
-
-      // $.each(data.behaviors, (bi, group) => {
-      //   $.each(group.rules, (ri, rule) => {
-      //     if (rule.type === "browser_language") {
-      //       handleLanguage(id, group);
-      //     }
-      //   })
-      // });
-
+      initTriggers(id, data.triggers);
     });
-
-    // function setPopupCookie(name, hours) {
-    //   $.cookie('set', name, true, {
-    //     path: '/',
-    //     expires: (1000 * 60 * 60 * hours),
-    //   });
-    // }
 
     function initTriggers(id, triggers) {
       $.each(triggers, (ti, group) => {
@@ -480,7 +374,6 @@ import Cookie from 'formstone/jquery/cookie';
   // 
 
   $(window).on('modal:open', (e) => {
-    // console.log('open', e);
     // cookie checker
     let data = $(e.originalEvent.detail.el).data('popblocks-data');
     console.log('open', data);
@@ -500,9 +393,5 @@ import Cookie from 'formstone/jquery/cookie';
       console.log(cookieActive, $.cookie('get', cookieName));
     }
   });
-
-  //
-
-  // window.requestAnimationFrame(onRAF);
     
 })(jQuery, window);

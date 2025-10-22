@@ -1,6 +1,6 @@
 <?php 
 
 ?>
-<div class="popblocks -container">
+<div class="popblocks-container">
   <?php echo $content; ?>
 </div>
