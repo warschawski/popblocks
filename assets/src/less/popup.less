@@ -1,14 +1,12 @@
 @import 'npm://formstone/src/less/modal.less';
 
 .popblocks-modal {
-    --popblocks-modal-button-background: transparent;
-    --popblocks-modal-button-color: var(--wp--preset--color--contrast);
-    
-    --popblocks-modal-container-bg: var(--wp--preset--color--base);
-    
-    // Map --poblocks- to --fs-?
-    
-    --popblocks-popup-width: ~'min(600px, 90vw)';
+  --popblocks-modal-button-background: transparent;
+  --popblocks-modal-button-color: var(--wp--preset--color--contrast);
+
+  --popblocks-modal-container-bg: var(--wp--preset--color--base);
+
+  --popblocks-popup-width: ~'min(600px, 90vw)';
 }
 
 .popblocks-container {
@@ -22,33 +20,21 @@
 }
 
 .popblocks-popup {
-    max-width: var(--popblocks-popup-width);
+  max-width: var(--popblocks-popup-width);
+  
+  p.has-background {
     
-    p.has-background {
-        
-        &:first-child {
-            margin-top: 0;
-        }
-        
-        &:last-child {
-            margin-bottom: 0;
-        }
+    &:first-child {
+      margin-top: 0;
     }
-
-    //.wp-block-image, 
-    img {
-        max-width: 100%;
-        height: auto;
+    
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 
-    //
-    // .wp-block-group {
-    //     > * {
-    //         margin: var(--flow-spacing) 0 !important;
-    //     }
-
-    //     &.padding_small {
-    //         padding: var(--flow-spacing);
-    //     }
-    // }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
