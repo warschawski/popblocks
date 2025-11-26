@@ -47,5 +47,15 @@
     ],
     "type": "text",
     "suffix": "none"
+  },
+  {
+    "name": "Browser Location",
+    "value": "browser_location",
+    "operators": [
+      "equals",
+      "not_equals"
+    ],
+    "type": "text",
+    "suffix": "none"
   }
 ]

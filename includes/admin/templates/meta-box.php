@@ -241,7 +241,8 @@
 
   </div>
   
-  <textarea name="popblocks_data" x-text="finalData()" style="width: 100%; height: 200px; margin-top: 40px;"></textarea>
+  <!-- <textarea name="popblocks_data" x-text="finalData()" style="width: 100%; height: 200px; margin-top: 40px;"></textarea> -->
+  <textarea name="popblocks_data" x-text="finalData()" style="display: none;"></textarea>
 </div>
 
 <template id="popup_conditionals">
@@ -266,6 +267,7 @@
                     x-bind:value="option.value"
                     x-text="option.name"
                     x-bind:selected="option.value == rule.type"
+                    x-bind:disabled="option.value === 'browser_location'"
                   ></option>
                 </template>
               </select>
