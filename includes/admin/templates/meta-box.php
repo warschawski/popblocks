@@ -1,3 +1,9 @@
+<style title="popblocks-admin">
+  <?php // echo file_get_contents( get_home_path() . '/wp-includes/css/dist/components/style.css' ); // doesn't work, breaks the admin :( ?>
+  
+  <?php echo file_get_contents( $this->plugin->get_path() . 'assets/css/admin.css' ); ?>
+</style> 
+
 <script>
   let time = (new Date()).getTime();
   
@@ -107,13 +113,13 @@
     >
       <p>Show this popup when</p>
       <div class="popup_triggers popup_controllers"
-        x-data="ruleController({ groupTab: 'trigger' })"
+        x-data="popupsRuleController({ groupTab: 'trigger' })"
       >
         <template x-for="(group, gIndex) in trGroups" :key="group.id">
           <x-component
             template="popup_conditionals"
             x-data="{ item: group }"
-            styles="global"
+            styles="popblocks-admin"
           ></x-component>
         </template>
       </div>
@@ -124,13 +130,13 @@
     >
       <p>Show this popup on</p>
       <div class="popup_triggers popup_controllers"
-        x-data="ruleController({ groupTab: 'behavior' })"
+        x-data="popupsRuleController({ groupTab: 'behavior' })"
       >
         <template x-for="(group, gIndex) in beGroups" :key="group.id">
           <x-component
             template="popup_conditionals"
             x-data="{ item: group }"
-            styles="global"
+            styles="popblocks-admin"
           ></x-component>
         </template>
       </div>

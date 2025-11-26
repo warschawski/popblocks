@@ -3,7 +3,7 @@
 * Plugin Name: Pop Blocks
 * Description: Pop-ups plugin with block editor support.
 * Author: Warschawski
-* Version: 0.0.1
+* Version: 0.0.2
 * Plugin URI: http://warschawski.com
 * Author URI: http://warschawski.com
 * License: GPLv2 or later
@@ -213,6 +213,8 @@ class PopBlocks {
     
     require_once $path . 'includes/cache.php';
     require_once $path . 'includes/display.php';
+    
+    require_once $path . 'includes/updater.php';
   }
 
   // // Functions

@@ -1,48 +1,50 @@
 import Alpine from 'alpinejs';
-import component from 'alpinejs-component'
+import component from 'alpinejs-component';
 
 window.Alpine = Alpine;
 
 Alpine.plugin(component)
 
 Alpine.store('popups', {
-    id: 0,
-    triggers: [],
-    behaviors: [],
-    options: [],
-    init: function() {
-      console.log('Init: PopUps Store');
+  id: 0,
+  triggers: [],
+  behaviors: [],
+  options: [],
+  init: function() {
+    console.log('Init: PopUps Store');
+    
+    console.log(window.PopUpsData);
+
+    if (typeof window.PopUpsData !== 'undefined') {
+
+      if (typeof window.PopUpsData.id !== 'undefined') {
+        this.id = window.PopUpsData.id;
+        console.log(this.id);
+      }
       
-      console.log(window.PopUpsData);
-
-      if (typeof window.PopUpsData !== 'undefined') {
-
-        if (typeof window.PopUpsData.id !== 'undefined') {
-          this.id = window.PopUpsData.id;
-          console.log(this.id);
-        }
-        
-        if (typeof window.PopUpsData.triggers !== 'undefined') {
-          this.triggers = window.PopUpsData.triggers;
-          console.log(this.triggers[0]);
-        }
-
-        if (typeof window.PopUpsData.behaviors !== 'undefined') {
-          this.behaviors = window.PopUpsData.behaviors;
-          console.log(this.behaviors);
-        }
-        
-        if (typeof window.PopUpsData.options !== 'undefined') {
-          this.options = window.PopUpsData.options;
-          console.log(this.options);
-        }
+      if (typeof window.PopUpsData.triggers !== 'undefined') {
+        this.triggers = window.PopUpsData.triggers;
+        console.log(this.triggers[0]);
       }
 
-      this.behaviorOptions = window.PopBlocksConfig.behaviors;
-      this.operatorOptions = window.PopBlocksConfig.operators;
-      this.triggerOptions = window.PopBlocksConfig.triggers;
-    },
+      if (typeof window.PopUpsData.behaviors !== 'undefined') {
+        this.behaviors = window.PopUpsData.behaviors;
+        console.log(this.behaviors);
+      }
+      
+      if (typeof window.PopUpsData.options !== 'undefined') {
+        this.options = window.PopUpsData.options;
+        console.log(this.options);
+      }
+    }
+
+    this.behaviorOptions = window.PopBlocksConfig.behaviors;
+    this.operatorOptions = window.PopBlocksConfig.operators;
+    this.triggerOptions = window.PopBlocksConfig.triggers;
+  },
 });
+
+//
 
 window.popupsMetaBox = function(data) {
 
@@ -74,6 +76,8 @@ window.popupsMetaBox = function(data) {
   };
 };
 
+// 
+
 window.popupsTabs = function(data) {
 
   function setTab(tab) {
@@ -93,8 +97,9 @@ window.popupsTabs = function(data) {
   }
 };
 
+// 
 
-window.ruleController = function(data) {
+window.popupsRuleController = function(data) {
   let parentGroup = data.groupTab;
   let groupName = parentGroup.substring(0,2) + 'Groups';
   let optionsName = parentGroup + 'Options';
@@ -195,5 +200,7 @@ window.ruleController = function(data) {
     groupName: groupName,
   };
 }
+
+// 
 
 Alpine.start();

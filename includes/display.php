@@ -41,6 +41,10 @@ class PopBlocks_Display {
     $all = PopBlocks_Cache::get_all();
     
     foreach ( $all as $popup ) {
+      if ( empty( $popup['data'] ) ) {
+        continue;
+      }
+      
       $behaviors = $this->filterBehaviors( $popup['data']['behaviors'] ?? [] );
       
       if ( ! empty( $behaviors ) ) {
