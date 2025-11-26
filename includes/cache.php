@@ -30,7 +30,7 @@ class PopBlocks_Cache {
   //
 
   public function init() {
-    add_action( 'save_post', [ $this, 'cache' ], 999 );
+    add_action( 'save_post_popblocks-popup', [ $this, 'cache' ], 999 );
   }
   
   // 
@@ -39,23 +39,23 @@ class PopBlocks_Cache {
     $cached = get_transient( self::$key );
     
     if ( $force || empty( $cached ) ) {
-        $cached = [];
+      $cached = [];
+      
+      $popups = get_posts( [
+        'post_type' => 'popblocks-popup'
+      ] );
+      
+      foreach ($popups as $popup) {
+        $data = json_decode( get_post_meta( $popup->ID, 'popblocks_data', true ), true );
         
-        $popups = get_posts( [
-          'post_type' => 'popblocks-popup'
-        ] );
-        
-        foreach ($popups as $popup) {
-            $data = json_decode( get_post_meta( $popup->ID, 'popblocks_data', true ), true );
-            
-            $cached[] = [
-                'ID' => $popup->ID,
-                'title' => $popup->title,
-                'data' => $data,
-            ];
-        }
-        
-        set_transient( self::$key, $cached, DAY_IN_SECONDS * 7 );
+        $cached[] = [
+          'ID' => $popup->ID,
+          'title' => $popup->title,
+          'data' => $data,
+        ];
+      }
+      
+      set_transient( self::$key, $cached, DAY_IN_SECONDS * 7 );
     }
     
     return $cached;

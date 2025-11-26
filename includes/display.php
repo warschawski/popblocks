@@ -77,6 +77,7 @@ class PopBlocks_Display {
     global $post;
     
     $post = get_post( $popup['ID'] );
+    
     setup_postdata( $post );
     
     // Customizable via hooks

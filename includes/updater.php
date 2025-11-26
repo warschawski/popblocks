@@ -9,10 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class PopBlocks_Updater extends PW_GitHub_Updater {
 
-  public $username = 'benplum';
-  public $repository = 'Gravity-Forms-Lead-Source-Tracker';
-  public $requires = '5.0';
-  public $tested = '5.0.2';
+  public $username = 'warschawski';
+  public $repository = 'popblocks';
+  public $requires = '6.0';
+  public $tested = '6.8.3';
 
   public function __construct() {
     $this->parent = PopBlocks::get_instance();
