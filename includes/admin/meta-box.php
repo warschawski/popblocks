@@ -26,7 +26,7 @@ class PopBlocks_Meta_Box {
     
     add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ] );
     
-    add_action( 'save_post', [ $this, 'save_post' ] );
+    add_action( 'save_post_popblocks-popup', [ $this, 'save_post' ] );
   }
 
   //
@@ -62,21 +62,11 @@ class PopBlocks_Meta_Box {
   }
   
   function save_post( $post_id ) {
-    // if ( empty( $_POST['popblocks_meta_box_nonce'] ) ) {
-    //   return;
-    // }
-
-    // if ( ! wp_verify_nonce( $_POST['popblocks_meta_box_nonce'], 'popblocks_meta_box_nonce' ) ) {
-    //   return;
-    // }
-    
-    // if ( ! current_user_can( 'edit_post' ) ) {
-    //   return;
-    // }
-  
     $data = sanitize_text_field( $_POST['popblocks_data'] ?? '' );
     
     update_post_meta( $post_id, 'popblocks_data', $data );
+    
+    PopBlocks_Cache::cache( true );
   }
   
 }

@@ -41,6 +41,7 @@ class PopBlocks_Display {
     $all = PopBlocks_Cache::get_all();
     
     foreach ( $all as $popup ) {
+      var_dump($popup);
       if ( empty( $popup['data'] ) ) {
         continue;
       }

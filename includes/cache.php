@@ -24,13 +24,13 @@ class PopBlocks_Cache {
   public function __construct() {
     $this->plugin = PopBlocks::get_instance();
 
-    add_action( 'init', [ $this, 'init' ], 999 );
+    // add_action( 'init', [ $this, 'init' ], 999 );
   }
 
   //
 
   public function init() {
-    add_action( 'save_post_popblocks-popup', [ $this, 'cache' ], 999 );
+    // add_action( 'save_post_popblocks-popup', [ $this, 'cache' ], 999 );
   }
   
   // 
