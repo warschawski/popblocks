@@ -13,7 +13,7 @@ $modal_options = apply_filters( 'popblock_popup_options', [
   data-popblocks-options="<?php echo htmlentities( json_encode( $modal_options ) ); ?>"
   data-popblocks-data="<?php echo htmlentities( json_encode( $popup['data'] ?? [] ) ); ?>"
 >
-  Open Popup
+  Open Popup <?php echo get_the_title( $post->ID ); ?>
 </a>
 <div id="popblocks-<?php echo $post->ID; ?>" class="popblocks-popup-container">
   <div class="popblocks-popup <?php echo $class; ?>">

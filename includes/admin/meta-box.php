@@ -53,22 +53,6 @@ class PopBlocks_Meta_Box {
   }
   
   function draw_meta_box( $post ) {
-    // $caption = $post->post_title;
-    // // $synced = get_post_meta( $post->ID, '_instagram_synced', true );
-    // // $id = get_post_meta( $post->ID, '_instagram_id', true );
-    // $permalink = get_post_meta( $post->ID, 'permalink', true );
-    // $type = get_post_meta( $post->ID, 'type', true );
-    // // $media = get_post_meta( $post->ID, 'media', true );
-    // $media_id = get_post_meta( $post->ID, 'media_id', true );
-    // $image = theme_get_image( $media_id, 'scaled-small' ); // ?
-
-    // $post_id = $post->ID;
-
-    // $data = get_post_meta( $post_id, 'data', true );
-
-    // print_r($data);
-    // die();
-    
     $popup_data = get_post_meta( $post->ID, 'popblocks_data', true );
     $popup_json = json_decode( $popup_data, true );
     

@@ -6,6 +6,13 @@
 
 <script>
   let time = (new Date()).getTime();
+  let timeIndex = 0;
+  
+  function generate_id() {
+    timeIndex++;
+    
+    return 'pb' + time + timeIndex;
+  }
   
   window.PopBlocksConfig = <?php echo PopBlocks_Config::admin_settings(); ?>;
   
@@ -16,10 +23,10 @@
     id: <?php echo $post->ID; ?>,
     triggers: [
       {
-        id: 'id' + (new Date()).getTime() + 2,
+        id: generate_id(),
         rules: [
           {
-            id: 'id' + (new Date()).getTime(),
+            id: generate_id(),
             parent: 'trigger',
             type: 'page_load',
             operator: 'delay',
@@ -31,10 +38,10 @@
     ],
     behaviors: [
       {
-        id: 'id' + (new Date()).getTime() + 2,
+        id: generate_id(),
         rules: [
           {
-            id: 'id' + (new Date()).getTime(),
+            id: generate_id(),
             parent: 'behavior',
             type: 'all',
             operator: 'none',
@@ -45,7 +52,7 @@
       },
     ],
     options: {
-      id: 'id' + (new Date()).getTime(),
+      id: generate_id(),
       active: false,
       name: '',
       duration: {
