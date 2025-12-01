@@ -30,7 +30,6 @@ class PopBlocks_Cache {
   //
 
   public function init() {
-    // add_action( 'save_post_popblocks-popup', [ $this, 'cache' ], 999 );
   }
   
   // 
