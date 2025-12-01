@@ -273,7 +273,7 @@ import Cookie from 'formstone/jquery/cookie';
 
     $.each(scrollCollection, (index, item) => {
       if (!item.opened && scrollPercent >= item.percent) {
-        if (verifyBehaviorAndCookie(id)) {
+        if (verifyBehaviorAndCookie(item.id)) {
           PopBlocks.open(item.id);
         }
 
@@ -289,7 +289,7 @@ import Cookie from 'formstone/jquery/cookie';
         let $targets = getSelector(item.selector, item.operator);
 
         if (isElementInViewport($targets[0])) {
-          if (verifyBehaviorAndCookie(id)) {
+          if (verifyBehaviorAndCookie(item.id)) {
             PopBlocks.open(item.id);
           }
 
