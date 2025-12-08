@@ -23,9 +23,9 @@ class PopBlocks_Meta_Box {
     $this->plugin = PopBlocks::get_instance();
 
     add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-    
+
     add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ] );
-    
+
     add_action( 'save_post_popblocks-popup', [ $this, 'save_post' ] );
   }
 
@@ -38,7 +38,7 @@ class PopBlocks_Meta_Box {
       if ( is_object( $screen ) && $screen->post_type == 'popblocks-popup' ) {
         wp_enqueue_style( 'wp-components' );
         // https://inspir.test/wp-admin/load-styles.php?c=1&dir=ltr&load%5Bchunk_0%5D=wp-components&ver=6.8.3
-        
+
         // wp_register_style( 'popblocks-admin', $this->plugin->get_url() . 'assets/css/admin.css', '',  $this->plugin->version );
         // wp_enqueue_style( 'popblocks-admin' );
 
@@ -47,28 +47,64 @@ class PopBlocks_Meta_Box {
       }
     }
   }
-  
+
   function add_meta_box() {
     add_meta_box( 'popblocks_popup_meta_box', 'Popup Settings', [ $this, 'draw_meta_box' ], 'popblocks-popup' );
   }
-  
+
   function draw_meta_box( $post ) {
+    // TODO maybe we need a better way to juggle the json data?
     $popup_data = get_post_meta( $post->ID, 'popblocks_data', true );
-    $popup_json = json_decode( $popup_data, true );
-    
+    $popup_data = json_decode( $popup_data, true );
+
+    // // TODO need a better way to check for defaults?
+    // $popup_data = PopBlocks_Utils::parse_args_deep( $popup_data, [
+    //   'triggers' => [
+    //     [
+    //       'rules' => [
+    //         []
+    //       ]
+    //     ],
+    //   ],
+    //   'behaviors' => [
+    //     [
+    //       'rules' => [
+    //         []
+    //       ]
+    //     ],
+    //   ],
+    //   'options' => [
+    //     'cookie' => [
+    //       'active' => false,
+    //       'name' => '',
+    //       'duration' => [
+    //         'value' => 0,
+    //         'unit' => 'hours',
+    //       ]
+    //     ]
+    //   ],
+    // ] );
+
+    $popup_data = PopBlocks_Utils::hydrate_data( $popup_data );
+
     wp_nonce_field( 'popblocks_meta_box_nonce', 'popblocks_meta_box_nonce' );
 
     include $this->plugin->get_path() . 'includes/admin/templates/meta-box.php';
   }
-  
+
   function save_post( $post_id ) {
-    $data = sanitize_text_field( $_POST['popblocks_data'] ?? '' );
-    
-    update_post_meta( $post_id, 'popblocks_data', $data );
-    
-    PopBlocks_Cache::cache( true );
+    if ( ! empty( $_POST['popblocks_data'] ) ) {
+      // $data = sanitize_text_field( $_POST['popblocks_data'] ?? '' );
+      $data = json_decode( stripslashes( $_POST['popblocks_data'] ?? '' ), true );
+      $data = PopBlocks_Utils::clean_data( $data );
+      $data = json_encode( $data );
+
+      update_post_meta( $post_id, 'popblocks_data', $data );
+
+      PopBlocks_Cache::cache( true );
+    }
   }
-  
+
 }
 
 PopBlocks_Meta_Box::get_instance();

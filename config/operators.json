@@ -7,12 +7,12 @@
   {
     "id": "element_id",
     "name": "Element ID",
-    "placeholder": "trigger_button"
+    "placeholder": "trigger_class"
   },
   {
     "id": "element_class",
     "name": "Element Class",
-    "placeholder": "trigger_button22"
+    "placeholder": "trigger_class"
   },
   {
     "id": "scroll",

@@ -3,7 +3,7 @@
 * Plugin Name: Pop Blocks
 * Description: Pop-ups plugin with block editor support.
 * Author: Warschawski
-* Version: 0.0.2
+* Version: 0.0.3
 * Plugin URI: http://warschawski.com
 * Author URI: http://warschawski.com
 * License: GPLv2 or later
@@ -60,7 +60,7 @@ class PopBlocks {
     do_action( 'popblocks_pre_init' );
 
     add_action( 'init', [ $this, 'init' ] );
-    
+
     add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
     // add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
@@ -115,14 +115,14 @@ class PopBlocks {
     // $this->add_rewrite_rule();
 
     // do_action( 'popblocks_loaded' );
-    
+
     register_post_meta( 'popblocks-popup', 'popblocks_data', [
       'show_in_rest' => true,
       'single' => true,
       'type' => 'string',
     ] );
   }
-  
+
   function rest_api_init() {
     $this->require_admin();
   }
@@ -209,11 +209,12 @@ class PopBlocks {
     $path = $this->get_path();
 
     require_once $path . 'includes/config.php';
+    require_once $path . 'includes/utils.php';
     require_once $path . 'includes/post-types.php';
-    
+
     require_once $path . 'includes/cache.php';
     require_once $path . 'includes/display.php';
-    
+
     require_once $path . 'includes/updater.php';
   }
 
@@ -999,7 +1000,7 @@ class PopBlocks {
   // public function admin_notices() {
   //   $conflicts = get_option( 'popblocks_conflicts' );
 
-  //   if ( ! empty( $conflicts ) ) { 
+  //   if ( ! empty( $conflicts ) ) {
   /*
       ?>
       <div class="notice error">

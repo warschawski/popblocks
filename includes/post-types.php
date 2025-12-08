@@ -23,7 +23,7 @@ class PopBlocks_Post_Types {
     $this->plugin = PopBlocks::get_instance();
 
     add_action( 'init', [ $this, 'init' ], 999 );
-    
+
     add_filter( 'allowed_block_types', [ $this, 'allowed_block_types' ], 10, 2 );
   }
 
@@ -60,7 +60,7 @@ class PopBlocks_Post_Types {
       'show_in_rest' => true,
     ] );
   }
-  
+
   function allowed_block_types( $allowed_blocks, $post ) {
     if ( $post->post_type == 'popblocks-popup' ) {
       $allowed_blocks =[
@@ -68,12 +68,14 @@ class PopBlocks_Post_Types {
         'core/paragraph',
         'core/heading',
         'core/list',
-        'core/group'
+        'core/group',
+        'core/buttons',
+        'core/button',
       ];
-      
+
       $allowed_blocks = apply_filters( 'popblocks_allowed_block_types', $allowed_blocks, $post );
     }
-    
+
     return $allowed_blocks;
   }
 

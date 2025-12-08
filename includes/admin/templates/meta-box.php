@@ -1,23 +1,21 @@
 <style title="popblocks-admin">
-  <?php // echo file_get_contents( get_home_path() . '/wp-includes/css/dist/components/style.css' ); // doesn't work, breaks the admin :( ?>
-  
   <?php echo file_get_contents( $this->plugin->get_path() . 'assets/css/admin.css' ); ?>
-</style> 
+</style>
 
 <script>
   let time = (new Date()).getTime();
   let timeIndex = 0;
-  
+
   function generate_id() {
     timeIndex++;
-    
+
     return 'pb' + time + timeIndex;
   }
-  
+
   window.PopBlocksConfig = <?php echo PopBlocks_Config::admin_settings(); ?>;
-  
+
   <?php if ( ! empty( $popup_data ) ) : ?>
-  window.PopUpsData = <?php echo $popup_data; ?>
+  window.PopUpsData = <?php echo json_encode( $popup_data ); ?>;
   <?php else : ?>
   window.PopUpsData = {
     id: <?php echo $post->ID; ?>,
@@ -53,25 +51,26 @@
     ],
     options: {
       id: generate_id(),
-      active: false,
-      name: '',
-      duration: {
-        value: 0,
-        unit: 'hours'
-      }
+      cookie: {
+        active: false,
+        name: '',
+        duration: {
+          value: 0,
+          unit: 'hours',
+        },
+      },
     },
   };
   <?php endif; ?>
+  console.log(window.PopUpsData);
 </script>
 
 <div
   class="popblocks-components-tab-panel"
-  x-data="popupsMetaBox({
-    color: null,
-    trigger: '',
-  })"
+  x-data="popupsMetaBox()"
   x-on:tab-activated="onTabActivated"
 >
+  <?php wp_nonce_field( basename( __FILE__ ), 'popblocks_nonce' ); ?>
   <div
     x-data="popupsTabs({
       activeTab: 'trigger'
@@ -156,50 +155,50 @@
       <div
         class="popblocks-options_tab_wrapper"
       >
-        <div 
+        <div
           class="popblocks-flag_toggle_wrapper"
         >
           <span
             class="popblocks-components-form-toggle"
-            x-bind:class="{ 'is-checked': active }"
+            x-bind:class="{ 'is-checked': cookie.active }"
           >
-            <input 
+            <input
               class="popblocks-components-form-toggle__input"
               type="checkbox"
-              id="cookie_flag"
-              name="cookie_flag"
-              x-model="active"
+              id="cookie_control"
+              name="cookie_control"
+              x-model="cookie.active"
             >
             <span class="popblocks-components-form-toggle__track"></span>
             <span class="popblocks-components-form-toggle__thumb"></span>
           </span>
-          <label class="popblocks-components-toggle-control__label" for="cookie_flag">
-            Cookie Flag
+          <label class="popblocks-components-toggle-control__label" for="cookie_control">
+            Cookie Control
           </label>
         </div>
 
         <div
           class="cookie_settings"
-          x-show="active"
+          x-show="cookie.active"
         >
           <div class="popblocks-components-input-base">
             <div>
-              <label 
-                for="cookie-name" 
+              <label
+                for="cookie_name"
                 class="popblocks-components-input-control__label"
               >
                 Cookie Name
               </label>
             </div>
-            <div 
+            <div
               class="popblocks-components-input-control__container"
             >
-              <input  
-                id="cookie-name"
+              <input
+                id="cookie_name"
                 class="popblocks-components-input-control__input"
                 type="text"
-                x-model="name"
-                x-bind:placeholder="name"
+                x-model="cookie.name"
+                x-bind:placeholder="cookie.name"
               />
               <div aria-hidden="true" class="popblocks-components-input-control__backdrop"></div>
             </div>
@@ -207,30 +206,30 @@
 
           <div class="popblocks-components-input-base">
             <div>
-              <label 
-                for="cookie-time" 
+              <label
+                for="cookie_time"
                 class="popblocks-components-input-control__label"
               >
                 Cookie Time
               </label>
             </div>
-            <div 
+            <div
               class="popblocks-components-input-control__container"
             >
-              <input  
-                id="cookie-time"
+              <input
+                id="cookie_time"
                 class="popblocks-components-input-control__input"
                 type="number"
                 placeholder="0"
-                x-model="duration.value"
+                x-model="cookie.duration.value"
               />
-              <span 
+              <span
                 class="popblocks-components-input-control__suffix"
               >
-                <select 
-                  class="popblocks-components-unit-control__select" 
+                <select
+                  class="popblocks-components-unit-control__select"
                   aria-label="Select unit"
-                  x-model="duration.unit"
+                  x-model="cookie.duration.unit"
                 >
                   <option value="hours">hours</option>
                   <option value="days">days</option>
@@ -250,7 +249,7 @@
     </div>
 
   </div>
-  
+
   <!-- <textarea name="popblocks_data" x-text="finalData()" style="width: 100%; height: 200px; margin-top: 40px;"></textarea> -->
   <textarea name="popblocks_data" x-text="finalData()" style="display: none;"></textarea>
 </div>
@@ -265,7 +264,7 @@
           <div class="popblocks-popup_condition_wrapper">
 
             <div class="popblocks-components-input-control__container">
-              <select 
+              <select
                 class="popblocks-components-select-control__input"
                 x-model="rule.type"
                 x-on:change="updateRuleType(rule)"
@@ -293,13 +292,13 @@
               <div aria-hidden="true" class="popblocks-components-input-control__backdrop"></div>
             </div>
 
-            <div 
+            <div
               class="popblocks-components-input-control__container"
               x-show="!['none', 'scroll'].includes(rule.operator)"
             >
-              <select 
+              <select
                 class="popblocks-components-select-control__input"
-                x-model="rule.operator" 
+                x-model="rule.operator"
               >
                 <template
                   x-for="operatorOption in getOperatorOptions(rule)"
@@ -326,22 +325,22 @@
             <template
               x-for="operatorOption in getOperatorOptions(rule)"
             >
-              <div 
+              <div
                 class="popblocks-components-input-control__container"
                 x-show="rule.operator == operatorOption.id && rule.operator !== 'none'"
               >
-                <input  
+                <input
                   class="popblocks-components-input-control__input"
                   type="text"
                   x-model="rule.value"
                   x-bind:placeholder="operatorOption.placeholder"
                 />
-                <span 
+                <span
                   class="popblocks-components-input-control__suffix"
                 >
-                  <div 
+                  <div
                     class="popblocks-components-unit-control__unit-label"
-                    x-text="rule.suffix" 
+                    x-text="rule.suffix"
                     x-show="rule.suffix !== 'none' && activeTab !== 'behavior'"
                   ></div>
                 </span>
@@ -357,9 +356,9 @@
           >
             and
           </button>
-          <button 
-            type="button" 
-            aria-disabled="false" 
+          <button
+            type="button"
+            aria-disabled="false"
             class="popblocks-popup_condition_remove popblocks-components-button popblocks-is-secondary popblocks-is-destructive"
             x-show="
               (gIndex == 0 && group.rules.length > 1) ||
@@ -384,5 +383,5 @@
         Add New Group
       </button>
     </div>
-  </div>  
+  </div>
 </template>

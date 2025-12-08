@@ -11,30 +11,30 @@ Alpine.store('popups', {
   behaviors: [],
   options: [],
   init: function() {
-    console.log('Init: PopUps Store');
-    
-    console.log(window.PopUpsData);
+    console.log('PopBlocks Store: Init');
+
+    // console.log(window.PopUpsData);
 
     if (typeof window.PopUpsData !== 'undefined') {
 
       if (typeof window.PopUpsData.id !== 'undefined') {
         this.id = window.PopUpsData.id;
-        console.log(this.id);
+        // console.log(this.id);
       }
-      
+
       if (typeof window.PopUpsData.triggers !== 'undefined') {
         this.triggers = window.PopUpsData.triggers;
-        console.log(this.triggers[0]);
+        // console.log(this.triggers[0]);
       }
 
       if (typeof window.PopUpsData.behaviors !== 'undefined') {
         this.behaviors = window.PopUpsData.behaviors;
-        console.log(this.behaviors);
+        // console.log(this.behaviors);
       }
-      
+
       if (typeof window.PopUpsData.options !== 'undefined') {
         this.options = window.PopUpsData.options;
-        console.log(this.options);
+        // console.log(this.options);
       }
     }
 
@@ -49,9 +49,9 @@ Alpine.store('popups', {
 window.popupsMetaBox = function(data) {
 
   function init() {
-    console.log('Popups Meta Box: Init');
+    console.log('PopBlocks Meta Box: Init');
   }
-  
+
   function finalData() {
     return JSON.stringify({
       id: this.$store.popups.id,
@@ -62,7 +62,7 @@ window.popupsMetaBox = function(data) {
   }
 
   function onTabActivated(e) {
-    console.log('Popups Meta Box: Tab Activated', e.detail, e);
+    console.log('PopBlocks Meta Box: Tab Activated (' + e.detail + ')');
   }
 
   return {
@@ -70,13 +70,10 @@ window.popupsMetaBox = function(data) {
     finalData: finalData,
     //
     onTabActivated: onTabActivated,
-    //
-    color: data.color,
-    trigger: data.trigger,
   };
 };
 
-// 
+//
 
 window.popupsTabs = function(data) {
 
@@ -97,7 +94,7 @@ window.popupsTabs = function(data) {
   }
 };
 
-// 
+//
 
 window.popupsRuleController = function(data) {
   let parentGroup = data.groupTab;
@@ -105,7 +102,7 @@ window.popupsRuleController = function(data) {
   let optionsName = parentGroup + 'Options';
 
   function init() {
-    console.log('Init: Rule Controller');
+    console.log('PopBlocks Rule Controller: Init (' + optionsName + ')');
 
     this.idGroups = this.$store.popups.triggers;
     this.trGroups = this.$store.popups.triggers;
@@ -125,12 +122,12 @@ window.popupsRuleController = function(data) {
       this.opGroups = this.$store.popups.options;
     });
 
-    console.log(this.opGroups);
+    // console.log(this.opGroups);
   }
 
   function getBaseRule(groupName) {
     return {
-      id: 'id' + (new Date()).getTime(),
+      id: 'pb' + (new Date()).getTime(),
       parent: groupName[0].rules[0].parent,
       type: groupName[0].rules[0].type,
       operator: groupName[0].rules[0].operator,
@@ -141,7 +138,7 @@ window.popupsRuleController = function(data) {
 
   function createGroup() {
     this[groupName].push({
-      id: 'id' + (new Date()).getTime(),
+      id: 'pb' + (new Date()).getTime(),
       rules: [
         getBaseRule(this[groupName]),
       ],
@@ -151,7 +148,7 @@ window.popupsRuleController = function(data) {
   function createRule(gIndex, rIndex) {
     this[groupName][gIndex].rules.splice(rIndex + 1, 0, getBaseRule(this[groupName]));
 
-    console.log(optionsName);
+    // console.log(optionsName);
   }
 
   function removeRule(gIndex, rIndex) {
@@ -167,7 +164,7 @@ window.popupsRuleController = function(data) {
       return trigger.value == rule.type;
     });
 
-    console.log('this is the selected trigger:' + JSON.stringify(selectedTrigger))
+    // console.log('this is the selected trigger:' + JSON.stringify(selectedTrigger))
 
     rule.operator = selectedTrigger.operators[0];
     rule.suffix = selectedTrigger.suffix;
@@ -201,6 +198,6 @@ window.popupsRuleController = function(data) {
   };
 }
 
-// 
+//
 
 Alpine.start();

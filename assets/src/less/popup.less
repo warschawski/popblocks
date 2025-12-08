@@ -1,33 +1,44 @@
 @import 'npm://formstone/src/less/modal.less';
 
 .popblocks-modal {
-  --popblocks-modal-button-background: transparent;
-  --popblocks-modal-button-color: var(--wp--preset--color--contrast);
+  // --popblocks-modal-overlay-bg: var(--wp--preset--color--contrast, #000);
+  --popblocks-modal-container-bg: var(--wp--preset--color--base, #fff);
 
-  --popblocks-modal-container-bg: var(--wp--preset--color--base);
+  --popblocks-modal-button-background: var(--wp--preset--color--base, #fff);
+  --popblocks-modal-button-color: var(--wp--preset--color--contrast, #000);
 
-  --popblocks-popup-width: ~'min(600px, 90vw)';
+  //
+
+  --popblocks-popup-width: ~'min(var(--wp--style--global--content-size, 800px), 90vw)';
+  --popblocks-popup-background-color: var(--wp--preset--color--base, #fff);
+  --popblocks-popup-text-color: var(--wp--preset--color--contrast, #000);
+  --popblocks-popup-padding: ~'min(40px, 5vw)';
 }
 
 .popblocks-container {
-  clip: rect(0 0 0 0); 
+  clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
   position: absolute;
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 1px;
 }
 
 .popblocks-popup {
-  max-width: var(--popblocks-popup-width);
-  
+  width: var(--popblocks-popup-width);
+
+  background-color: var(--popblocks-popup-background-color);
+  color: var(--popblocks-popup-text-color);
+  overflow: hidden;
+  padding: var(--popblocks-popup-padding);
+
   p.has-background {
-    
+
     &:first-child {
       margin-top: 0;
     }
-    
+
     &:last-child {
       margin-bottom: 0;
     }

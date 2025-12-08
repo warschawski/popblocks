@@ -46,28 +46,47 @@ import Cookie from 'formstone/jquery/cookie';
   // }
 
   //
-  
+
+  let popupQueue = [];
+
+  function checkQueue() {
+    console.log(popupQueue);
+
+    if (popupQueue.length > 0) {
+      PopBlocks.open(popupQueue.shift());
+    }
+  }
+
   window.PopBlocks = {
-    
+
     // PopBlocks.open(id);
     open: function(id) {
-      $('.popblocks-trigger[data-popblocks-id="' + id + '"]').modal('open');
+      if ($('.popblocks-modal').length == 0) {
+        $('.popblocks-trigger[data-popblocks-id="' + id + '"]').modal('open');
+      } else {
+        popupQueue.push(id);
+      }
+
+      console.log(popupQueue);
     },
-    
+
     // PopBlocks.close();
     close: function() {
       $('.popblocks-trigger').modal('close');
     },
-    
+
   };
 
   //
-  
+
   let scrollPercent = 0;
   let scrollCollection = [];
   let visibilityCollection = [];
-  
-  // 
+
+  let exitIntentRegistered = false;
+  let exitIntentCollection = [];
+
+  //
 
   function getSelector(selector, operator) {
     if (operator === 'element_class') {
@@ -75,7 +94,7 @@ import Cookie from 'formstone/jquery/cookie';
     } else if (operator === 'element_id') {
       selector = '#' + selector;
     }
-  
+
     return $(selector);
   }
 
@@ -96,7 +115,7 @@ import Cookie from 'formstone/jquery/cookie';
       }
     }
 
-    // 2. Verify Url and Behavior 
+    // 2. Verify Url and Behavior
     let pass = false;
 
     for (group of data.behaviors) {
@@ -116,18 +135,18 @@ import Cookie from 'formstone/jquery/cookie';
 
         } else if (rule.type === 'url') {
           let url = window.location.href;
-          
+
           if (rule.operator === 'contains') {
             rulePass = url.includes( rule.value.toLowerCase() );
           } else {
             rulePass = !url.includes( rule.value.toLowerCase() );
           }
-          
+
         } else {
           rulePass = true;
         }
 
-        console.log('rule', rule, rulePass);
+        // console.log('rule', rule, rulePass);
 
         if (!rulePass) {
           groupPass = false;
@@ -135,7 +154,7 @@ import Cookie from 'formstone/jquery/cookie';
         }
       }
 
-      console.log('group', group, groupPass);
+      // console.log('group', group, groupPass);
 
       if (groupPass) {
         pass = true;
@@ -143,7 +162,7 @@ import Cookie from 'formstone/jquery/cookie';
       }
     }
 
-    console.log('pass', pass);
+    // console.log('pass', pass);
 
     return pass; // Cookie is not active on current popup
   }
@@ -152,13 +171,13 @@ import Cookie from 'formstone/jquery/cookie';
 
   function handlePageLoad(id, group) {
     let time = parseInt(group.rules[0].value, 10);
-          
-    console.log('Page Load: ', group.rules[0].value, time);
-    
-    setTimeout(function() { 
+
+    // console.log('Page Load: ', group.rules[0].value, time);
+
+    setTimeout(function() {
       if (verifyBehaviorAndCookie(id)) {
         PopBlocks.open(id);
-      } 
+      }
     }, time * 1000);
   }
 
@@ -167,26 +186,26 @@ import Cookie from 'formstone/jquery/cookie';
     let maxIdleTime = group.rules[0].value;
     let idleInterval;
 
-    console.log(group.rules[0]);
-    
+    // console.log(group.rules[0]);
+
     let resetIdleTime = function(e) {
       idleTime = 0;
     };
 
     $(document).ready(function () {
       $(this).on(`mousemove.${id} keypress.${id}`, resetIdleTime);
-      
+
       idleInterval = setInterval(timerIncrement, 1000);
     });
 
     function timerIncrement() {
       idleTime++;
-      
+
       if (idleTime > maxIdleTime) {
         if (verifyBehaviorAndCookie(id)) {
           PopBlocks.open(id);
         }
-        
+
         $(this).off(`mousemove.${id} keypress.${id}`, resetIdleTime);
 
         clearInterval(idleInterval);
@@ -194,48 +213,80 @@ import Cookie from 'formstone/jquery/cookie';
     }
   }
 
+  //
+
   function handleExitIntent(id, group) {
     let $window = $(window);
     let $body = $('body');
     let mouseY;
-  
-    $body.on(`mouseleave.${id}`, (e) => {
-      mouseY = e.clientY;
-  
-      if (mouseY < 0) {
-        $window.trigger(`exitintent.${id}`);
-      }
+
+    exitIntentCollection.push({
+      id: id,
+      // selector: group.rules[0].value.trim(),
+      // operator: group.rules[0].operator,
+      opened: false,
     });
-  
-    $window.on(`exitintent.${id}`, () => {
-      if (verifyBehaviorAndCookie(id)) {
-        PopBlocks.open(id);
-        
-        // $body.off(`mouseleave.${id}`);
-        // $window.off(`exitintent.${id}`);
+
+    if (!exitIntentRegistered) {
+      $body.on('mouseleave.popblocks', (e) => {
+        mouseY = e.clientY;
+
+        if (mouseY < 0) {
+          $window.trigger('exitintent.popblocks');
+        }
+      });
+
+      $window.on('exitintent.popblocks', () => {
+        processExitIntent();
+        // if (verifyBehaviorAndCookie(id)) {
+        //   PopBlocks.open(id);
+
+        //   // $body.off(`mouseleave.${id}`);
+        //   // $window.off(`exitintent.${id}`);
+        // }
+      });
+
+      exitIntentRegistered = true;
+    }
+  }
+
+  function processExitIntent() {
+    $.each(exitIntentCollection, (index, item) => {
+      if (!item.opened) {
+        exitIntentCollection[index].opened = true;
+
+        if (verifyBehaviorAndCookie(item.id)) {
+          PopBlocks.open(item.id);
+
+          return false; // break
+        }
       }
     });
   }
+
+  //
 
   function handleClick(id, group) {
     let selector = group.rules[0].value.trim();
     let operator = group.rules[0].operator;
 
     let $selector = getSelector(selector, operator);
-    
+
     $selector.on(`click.${id}`, (e) => {
       if (verifyBehaviorAndCookie(id)) {
         PopBlocks.open(id);
       }
     });
   }
-  
+
+  //
+
   function handleHover(id, group) {
     let selector = group.rules[0].value.trim();
     let operator = group.rules[0].operator;
 
     let $selector = getSelector(selector, operator);
-    
+
     $selector.on(`mouseover.${id}`, (e) => {
       if (verifyBehaviorAndCookie(id)) {
         PopBlocks.open(id);
@@ -243,24 +294,28 @@ import Cookie from 'formstone/jquery/cookie';
     });
   }
 
+  //
+
   function handleElementVisibility(id, group) {
     visibilityCollection.push({
-      id: id, 
+      id: id,
       selector: group.rules[0].value.trim(),
       operator: group.rules[0].operator,
       opened: false,
     });
-    
+
     window.requestAnimationFrame(onRAF);
   }
 
+  //
+
   function handleScroll(id, group) {
     scrollCollection.push({
-      id: id, 
+      id: id,
       percent: parseInt(group.rules[0].value, 10),
       opened: false,
     });
-    
+
     window.requestAnimationFrame(onRAF);
   }
 
@@ -269,15 +324,15 @@ import Cookie from 'formstone/jquery/cookie';
   function onRAF() {
     let doRAF = false;
 
-    // Check Scroll 
+    // Check Scroll
 
     $.each(scrollCollection, (index, item) => {
       if (!item.opened && scrollPercent >= item.percent) {
-        if (verifyBehaviorAndCookie(id)) {
+        scrollCollection[index].opened = true;
+
+        if (verifyBehaviorAndCookie(item.id)) {
           PopBlocks.open(item.id);
         }
-
-        item.opened = true;
       } else {
         doRAF = true;
       }
@@ -289,11 +344,11 @@ import Cookie from 'formstone/jquery/cookie';
         let $targets = getSelector(item.selector, item.operator);
 
         if (isElementInViewport($targets[0])) {
-          if (verifyBehaviorAndCookie(id)) {
+          visibilityCollection[index].opened = true;
+
+          if (verifyBehaviorAndCookie(item.id)) {
             PopBlocks.open(item.id);
           }
-
-          item.opened = true;
         } else {
           doRAF = true;
         }
@@ -320,12 +375,12 @@ import Cookie from 'formstone/jquery/cookie';
 
   function convertDurationToHours(value, unit) {
     let map = { months: 730, weeks: 168, days: 24, hours: 1 };
-    
+
     return value * (map[unit] || 1);
   }
-  
-  // 
-    
+
+  //
+
   $(document).ready(function() {
 
     let triggerHandlers = {
@@ -337,16 +392,16 @@ import Cookie from 'formstone/jquery/cookie';
       element_visibility: handleElementVisibility,
       scroll: handleScroll,
     };
-    
+
     let $triggersHandles = $('.popblocks-trigger');
 
-    console.log($triggersHandles);
-    
+    // console.log($triggersHandles);
+
     $triggersHandles.modal({
       // TODO: plugin settings as defaults?
       returnFocus: false,
     });
-    
+
     $triggersHandles.each((i, el) => {
       let $el = $(el);
       let id = $el.data('popblocks-id');
@@ -365,25 +420,25 @@ import Cookie from 'formstone/jquery/cookie';
         if (handler) handler(id, group);
       });
     }
-    
+
   });
 
-  // 
+  //
 
   $(window).on('scroll', function() {
     let scrollTop = $(window).scrollTop();
     let docHeight = $(document).height() - window.innerHeight;
-    
+
     scrollPercent = (scrollTop / docHeight) * 100;
   });
 
-  // 
+  //
 
   $(window).on('modal:open', (e) => {
     // cookie checker
     let data = $(e.originalEvent.detail.el).data('popblocks-data');
-    console.log('open', data);
-    
+    // console.log('open', data);
+
     let cookieActive = data.options.active;
 
     if (cookieActive) {
@@ -396,8 +451,14 @@ import Cookie from 'formstone/jquery/cookie';
         expires: (1000 * 60 * 60 * cookieDurationHours),
       });
 
-      console.log(cookieActive, $.cookie('get', cookieName));
+      // console.log(cookieActive, $.cookie('get', cookieName));
     }
   });
-    
+
+  $(window).on('modal:close', (e) => {
+    setTimeout(function() {
+      checkQueue();
+    }, 0);
+  });
+
 })(jQuery, window);
