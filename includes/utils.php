@@ -11,6 +11,9 @@ class PopBlocks_Utils {
 
   public $file = __FILE__;
   // public $plugin;
+  
+  public $counter = 0;
+  public $time;
 
   public static function get_instance() {
     if ( ! isset( self::$instance ) && ! ( self::$instance instanceof PopBlocks_Utils ) ) {
@@ -21,6 +24,8 @@ class PopBlocks_Utils {
 
   public function __construct() {
     // $this->plugin = PopBlocks::get_instance();
+      
+    $this->time = time();
   }
 
   public static function clean_data( $data ) {
@@ -40,12 +45,11 @@ class PopBlocks_Utils {
   }
 
   public static function hydrate_id() {
-    static $counter = 0;
-    static $time = time();
+    $instance = PopBlocks_Utils::get_instance();
 
-    $counter++;
+    $instance->counter++;
 
-    return 'pb-' . $time . '-' . $counter;
+    return 'pb-' . $instance->time . '-' . $instance->counter;
   }
 
   public static function hydrate_data( $data ) {
